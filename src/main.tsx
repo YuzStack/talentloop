@@ -1,14 +1,14 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Toaster } from 'react-hot-toast'; // Import Toast engine
+import { Toaster } from 'react-hot-toast';
 import { createBrowserRouter, RouterProvider } from 'react-router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'; // Import React Query
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import './styles/index.css';
 import routes from './routes';
 
 // Create a persistent, global Query Client instance
-const queryClient = new QueryClient({
+const queryClient: QueryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60 * 5, // Cache query data for 5 minutes before refetching
@@ -19,12 +19,20 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter(routes);
 
-createRoot(document.getElementById('root')).render(
+const rootElement = document.getElementById('root');
+
+if (!rootElement) {
+  throw new Error(
+    'Fatal: Failed to identify a valid HTML root container element inside index.html',
+  );
+}
+
+createRoot(rootElement).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
 
-      {/* Global toast notifications config */}
+      {/* Global toast notifications config updated for Midnight Indigo alignment */}
       <Toaster
         position='top-center'
         toastOptions={{
@@ -35,16 +43,14 @@ createRoot(document.getElementById('root')).render(
             duration: 5000,
           },
           style: {
-            background: '#FFFFFF',
-            color: '#0F172A',
+            background: '#111827', // Dark theme slate panel matching --color-canvas-panel
+            color: '#F9FAFB', // Off-white main text matching --color-brand-dark
             fontFamily: 'Inter, sans-serif',
-            border: '1px solid #E2E8F0',
-            boxShadow: '0 4px 6px -1px rgba(15, 23, 42, 0.03)',
+            border: '1px solid #374151', // Subtle divider matching --color-border-subtle
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
           },
         }}
       />
     </QueryClientProvider>
   </StrictMode>,
 );
-
-// window.__TANSTACK_QUERY_CLIENT__ = queryClient; // For Dev Purpose

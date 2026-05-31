@@ -1,9 +1,14 @@
+import React from 'react';
 import { Navigate } from 'react-router';
 
 import { useUser } from '../features/authentication/hooks/useUser';
 import Spinner from './Spinner';
 
-export default function ProtectedRoute({ children }) {
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+}
+
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { isAuthenticated, isLoading } = useUser();
 
   if (isLoading) {
@@ -18,5 +23,5 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to='/login' replace />;
   }
 
-  if (isAuthenticated) return children;
+  return <>{children}</>;
 }

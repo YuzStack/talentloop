@@ -5,12 +5,12 @@ import { Sidebar } from './Sidebar';
 import Header from './Header';
 
 export default function AppLayout() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
   const location = useLocation();
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkMobile = (): void => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
@@ -18,7 +18,6 @@ export default function AppLayout() {
 
   // Close mobile menu on route change
   useEffect(() => {
-    // eslint-disable-next-line
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
 

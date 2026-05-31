@@ -18,7 +18,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* CRITICAL INPUT: Tells the checker to read Vite's environment maps */
+    "types": ["vite/client"]
   },
   "include": ["src"]
 }

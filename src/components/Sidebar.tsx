@@ -6,12 +6,24 @@ import {
   MapIcon,
   SettingsIcon,
   XIcon,
+  LucideIcon,
 } from 'lucide-react';
-// eslint-disable-next-line
 import { motion, AnimatePresence } from 'motion/react';
 import { NavLink } from 'react-router';
 
-const navItems = [
+interface NavItem {
+  path: string;
+  label: string;
+  icon: LucideIcon;
+}
+
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+  isMobile: boolean;
+}
+
+const navItems: NavItem[] = [
   {
     path: '/',
     label: 'Dashboard',
@@ -44,20 +56,22 @@ const navItems = [
   },
 ];
 
-export function Sidebar({ isOpen, onClose, isMobile }) {
+export function Sidebar({ isOpen, onClose, isMobile }: SidebarProps) {
   const sidebarContent = (
     <div className='bg-canvas-panel border-border-subtle h-full w-64 border-r p-6'>
       <div className='mb-8 flex items-center justify-between'>
         <div className='flex items-center gap-2'>
           <div className='bg-brand-primary flex h-8 w-8 items-center justify-center rounded text-xl font-bold text-white'>
-            S
+            T
           </div>
-          <span className='text-brand-dark text-xl font-bold'>SkillBridge</span>
+          <span className='text-brand-dark text-xl font-bold tracking-tight'>
+            TalentLoop
+          </span>
         </div>
         {isMobile && (
           <button
             onClick={onClose}
-            className='text-brand-muted hover:text-brand-dark p-1'
+            className='text-brand-muted hover:text-brand-dark cursor-pointer p-1'
           >
             <XIcon size={20} />
           </button>
@@ -72,11 +86,11 @@ export function Sidebar({ isOpen, onClose, isMobile }) {
               key={item.path}
               to={item.path}
               onClick={isMobile ? onClose : undefined}
-              className={({ isActive }) =>
+              className={({ isActive }: { isActive: boolean }) =>
                 `relative flex items-center gap-3 overflow-hidden rounded-lg px-4 py-3 transition-colors ${isActive ? 'text-brand-primary bg-canvas-inset font-medium' : 'text-brand-muted hover:text-brand-dark hover:bg-canvas-inset'}`
               }
             >
-              {({ isActive }) => (
+              {({ isActive }: { isActive: boolean }) => (
                 <>
                   {isActive && (
                     <div className='bg-brand-primary absolute top-0 bottom-0 left-0 w-0.75' />

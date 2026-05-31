@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router';
+import { Navigate, RouteObject } from 'react-router';
 
 import Signup from './features/authentication/pages/Signup';
 import Login from './features/authentication/pages/Login';
@@ -14,7 +14,7 @@ import HomePage from './features/dashboard/pages/HomePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import ResetPassword from './features/authentication/pages/ResetPassword';
 
-const routes = [
+const routes: RouteObject[] = [
   // PUBLIC ROUTES
   { path: '/signup', element: <Signup /> },
   { path: '/login', element: <Login /> },

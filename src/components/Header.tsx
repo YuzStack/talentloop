@@ -1,19 +1,23 @@
 import { MenuIcon, LogOutIcon } from 'lucide-react';
 import { useUser, useLogout } from '../features/authentication/hooks/useUser';
 
-export default function Header({ onMenuClick }) {
+interface HeaderProps {
+  onMenuClick: () => void;
+}
+
+export default function Header({ onMenuClick }: HeaderProps) {
   const { profile, isLoading: isLoadingProfile } = useUser();
   const { logout, isLoggingOut } = useLogout();
 
   // Extract initialization letters safely from the profile row
-  const initials = profile?.full_name
+  const initials: string = profile?.full_name
     ? profile.full_name
         .split(' ')
-        .map(n => n[0])
+        .map((n: string) => n[0])
         .join('')
         .toUpperCase()
         .slice(0, 2)
-    : 'ST';
+    : 'TL';
 
   return (
     <header className='bg-canvas-panel border-border-subtle sticky top-0 z-30 flex h-16 items-center justify-between border-b px-4 font-sans md:px-8'>
@@ -28,16 +32,16 @@ export default function Header({ onMenuClick }) {
       </div>
 
       <div className='flex items-center gap-3 pl-4 md:pl-6'>
-        {/* Student Label Metadata Card Block */}
+        {/* Professional Label Metadata Card Block */}
         <div className='hidden text-right select-none md:block'>
           <p className='text-brand-dark max-w-xs truncate text-sm font-semibold'>
             {profile
               ? profile.full_name
               : isLoadingProfile
-                ? 'Loading Student...'
+                ? 'Loading Professional...'
                 : 'Logging out...'}
           </p>
-          <p className='text-brand-muted text-xs'>Student Session</p>
+          <p className='text-brand-muted text-xs'>Professional Session</p>
         </div>
 
         {/* Dynamic Image or Initials Text Badge Container */}
