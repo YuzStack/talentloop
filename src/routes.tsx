@@ -33,7 +33,7 @@ const routes: RouteObject[] = [
       { path: '/settings', element: <Settings /> },
       { path: '/cv-upload', element: <CvUploadPage /> },
       { path: '/skill-selector', element: <SkillSelector /> },
-      { path: '/assessment', element: <TestingArena /> },
+      { path: '/testing-arena', element: <TestingArena /> },
       { path: '/recommendations', element: <RecommendationsPage /> },
       { path: '/roadmap', element: <RoadmapView /> },
     ],
