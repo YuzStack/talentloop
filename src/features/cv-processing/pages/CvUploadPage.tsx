@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, DragEvent, ChangeEvent, FormEvent } from 'react';
 import {
   UploadCloudIcon,
   FileIcon,
@@ -9,33 +9,41 @@ import {
 import { useNavigate } from 'react-router';
 import toast from 'react-hot-toast';
 
-import { parsePdfText, extractCvMetricsWithAi } from '../services/cvService';
+import {
+  parsePdfText,
+  extractCvMetricsWithAi,
+  ExtractedCvMetrics,
+} from '../services/cvService';
 import { useSubmitAssessment } from '../../skill-assessment/hooks/useAssessment';
 import { useUser } from '../../authentication/hooks/useUser';
 
+type UploadState = 'idle' | 'uploading' | 'parsed';
+
 export default function CvUploadPage() {
   const navigate = useNavigate();
-  const fileInputRef = useRef(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { user, profile } = useUser();
   const { mutate: submitAssessment, isPending: isSavingProfile } =
     useSubmitAssessment();
 
-  const [uploadState, setUploadState] = useState('idle'); // idle, uploading, parsed
-  const [fileName, setFileName] = useState('');
+  const [uploadState, setUploadState] = useState<UploadState>('idle');
+  const [fileName, setFileName] = useState<string>('');
 
-  // Real extracted metrics data state
-  const [extractedData, setExtractedData] = useState({
+  // Real extracted metrics data state strictly managed by our interface contract
+  const [extractedData, setExtractedData] = useState<ExtractedCvMetrics>({
     education: '',
     experience: '',
     skills: [],
   });
 
-  const [newSkillInput, setNewSkillInput] = useState('');
-  const [isAddingSkill, setIsAddingSkill] = useState(false);
+  const [newSkillInput, setNewSkillInput] = useState<string>('');
+  const [isAddingSkill, setIsAddingSkill] = useState<boolean>(false);
 
-  const processFile = async file => {
-    if (!file || file.type !== 'application/pdf') {
-      toast.error('SkillBridge strictly supports standard PDF uploads.');
+  const processFile = async (file: File | undefined): Promise<void> => {
+    if (!file) return;
+
+    if (file.type !== 'application/pdf') {
+      toast.error('TalentLoop strictly supports standard PDF uploads.');
       return;
     }
 
@@ -44,7 +52,7 @@ export default function CvUploadPage() {
       setUploadState('uploading');
 
       // A. Extract plain text from PDF pages locally
-      const extractedRawText = await parsePdfText(file);
+      const extractedRawText: string = await parsePdfText(file);
 
       if (!extractedRawText.trim()) {
         throw new Error(
@@ -53,7 +61,8 @@ export default function CvUploadPage() {
       }
 
       // B. Dispatch payload to Gemini ATS parsing service
-      const aiParsedResult = await extractCvMetricsWithAi(extractedRawText);
+      const aiParsedResult: ExtractedCvMetrics =
+        await extractCvMetricsWithAi(extractedRawText);
 
       setExtractedData({
         education: aiParsedResult.education || 'Not Specified',
@@ -63,7 +72,7 @@ export default function CvUploadPage() {
 
       setUploadState('parsed');
       toast.success('CV contents compiled successfully!');
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
       toast.error(
         error.message || 'Failed to analyze uploaded document matrix.',
@@ -72,27 +81,31 @@ export default function CvUploadPage() {
     }
   };
 
-  const handleDrop = e => {
+  const handleDragOver = (e: DragEvent<HTMLDivElement>): void => {
     e.preventDefault();
-    const file = e.dataTransfer?.files[0];
+  };
+
+  const handleDrop = (e: DragEvent<HTMLDivElement>): void => {
+    e.preventDefault();
+    const file: File | undefined = e.dataTransfer?.files[0];
     processFile(file);
   };
 
-  const handleFileChange = e => {
-    const file = e.target.files?.[0];
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const file: File | undefined = e.target.files?.[0];
     processFile(file);
   };
 
-  const removeSkillTag = targetSkill => {
+  const removeSkillTag = (targetSkill: string): void => {
     setExtractedData(prev => ({
       ...prev,
       skills: prev.skills.filter(s => s !== targetSkill),
     }));
   };
 
-  const handleAddSkillSubmit = e => {
+  const handleAddSkillSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    const cleanSkill = newSkillInput.trim();
+    const cleanSkill: string = newSkillInput.trim();
     if (cleanSkill && !extractedData.skills.includes(cleanSkill)) {
       setExtractedData(prev => ({
         ...prev,
@@ -103,11 +116,16 @@ export default function CvUploadPage() {
     }
   };
 
-  const handleConfirmAndSave = () => {
+  const handleConfirmAndSave = (): void => {
     if (extractedData.skills.length === 0) {
       toast.error(
         'Profile must include at least one mapped skill tag before confirmation.',
       );
+      return;
+    }
+
+    if (!user) {
+      toast.error('User authentication state is invalid.');
       return;
     }
 
@@ -126,10 +144,9 @@ export default function CvUploadPage() {
       {
         onSuccess: () => {
           toast.success('Professional data synchronized with your profile!');
-          // Seamlessly pass parameters to recommendations search params
           navigate('/recommendations');
         },
-        onError: err => {
+        onError: (err: any) => {
           toast.error(
             'Failed to update profile configurations: ' + err.message,
           );
@@ -138,14 +155,14 @@ export default function CvUploadPage() {
     );
   };
 
-  const studentInitials = profile?.full_name
+  const studentInitials: string = profile?.full_name
     ? profile.full_name
         .split(' ')
-        .map(n => n[0])
+        .map((n: string) => n[0])
         .join('')
         .toUpperCase()
         .slice(0, 2)
-    : 'ST';
+    : 'TL';
 
   return (
     <div className='bg-canvas-default mx-auto min-h-[calc(100vh-4rem)] max-w-5xl space-y-6 p-4 font-sans md:p-8'>
@@ -159,24 +176,23 @@ export default function CvUploadPage() {
         </p>
       </div>
 
-      {/* Input tag reference gate */}
       <input
         type='file'
         ref={fileInputRef}
         onChange={handleFileChange}
-        accept='application/pdf'
+        accept='image/*,application/pdf'
         className='hidden'
       />
 
       {uploadState === 'idle' && (
         <div
-          onDragOver={e => e.preventDefault()}
+          onDragOver={handleDragOver}
           onDrop={handleDrop}
           onClick={() => fileInputRef.current?.click()}
           className='border-border-subtle bg-canvas-panel hover:border-brand-primary hover:bg-canvas-inset/30 group cursor-pointer rounded-2xl border-2 border-dashed p-12 text-center shadow-sm transition-all'
         >
           <div className='bg-canvas-inset text-brand-muted group-hover:text-brand-primary group-hover:bg-brand-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors'>
-            <UploadCloudIcon size={32} />
+            <UploadCloudIcon size='{32}' />
           </div>
           <h3 className='text-brand-dark mb-2 text-base font-bold'>
             Drag your CV here or click to browse
@@ -192,7 +208,7 @@ export default function CvUploadPage() {
           <div className='w-full max-w-md space-y-4'>
             <div className='flex items-center justify-between text-sm font-semibold'>
               <span className='text-brand-dark flex items-center gap-2 truncate'>
-                <FileIcon size={16} className='text-brand-primary shrink-0' />
+                <FileIcon size='{16}' className='text-brand-primary shrink-0' />
                 {fileName}
               </span>
               <span className='text-brand-primary animate-pulse'>
@@ -201,12 +217,12 @@ export default function CvUploadPage() {
             </div>
             <div className='bg-canvas-inset relative h-2 w-full overflow-hidden rounded-full'>
               <div
-                className='bg-brand-primary animate-infinite-loading h-full w-1/3 rounded-full'
+                className='bg-brand-primary h-full w-1/3 rounded-full'
                 style={{ animation: 'loading-bar 1.5s infinite ease-in-out' }}
               />
             </div>
             <p className='text-brand-muted animate-pulse text-xs'>
-              SkillBridge parsing binary buffers and aligning skill profiles...
+              TalentLoop parsing binary buffers and aligning skill profiles...
             </p>
           </div>
         </div>
@@ -214,7 +230,6 @@ export default function CvUploadPage() {
 
       {uploadState === 'parsed' && (
         <div className='grid grid-cols-1 items-start gap-6 lg:grid-cols-2'>
-          {/* Data Inputs Editing Block */}
           <div className='bg-canvas-panel border-border-subtle space-y-6 rounded-2xl border p-6 shadow-sm'>
             <div className='border-border-subtle flex items-center justify-between border-b pb-4'>
               <h2 className='text-brand-dark text-base font-bold'>
@@ -224,7 +239,7 @@ export default function CvUploadPage() {
                 onClick={() => setUploadState('idle')}
                 className='text-brand-muted hover:text-feedback-danger flex cursor-pointer items-center gap-1 text-xs font-semibold transition-colors'
               >
-                <XIcon size={14} /> Re-upload
+                <XIcon size='{14}' /> Re-upload
               </button>
             </div>
 
@@ -278,7 +293,7 @@ export default function CvUploadPage() {
                         onClick={() => removeSkillTag(skill)}
                         className='text-brand-muted hover:text-feedback-danger hover:bg-canvas-panel ml-1 cursor-pointer rounded-full p-0.5 transition-colors'
                       >
-                        <XIcon size={12} />
+                        <XIcon size='{12}' />
                       </button>
                     </span>
                   ))}
@@ -305,7 +320,7 @@ export default function CvUploadPage() {
                       onClick={() => setIsAddingSkill(true)}
                       className='border-border-subtle text-brand-muted hover:text-brand-primary hover:border-brand-primary bg-canvas-panel inline-flex cursor-pointer items-center gap-1 rounded-full border border-dashed px-3 py-1 text-xs font-bold transition-colors'
                     >
-                      <PlusIcon size={12} /> Add Tag
+                      <PlusIcon size='{12}' /> Add Tag
                     </button>
                   )}
                 </div>
@@ -313,7 +328,6 @@ export default function CvUploadPage() {
             </div>
           </div>
 
-          {/* Profile Summary Preview Column */}
           <div className='bg-canvas-panel border-border-subtle sticky top-20 flex flex-col rounded-2xl border p-6 shadow-sm'>
             <h2 className='text-brand-dark mb-4 text-base font-bold'>
               Verified Summary Preview
@@ -337,21 +351,21 @@ export default function CvUploadPage() {
               <div className='space-y-3 text-xs font-semibold'>
                 <div className='text-brand-dark flex items-start gap-2'>
                   <CheckCircle2Icon
-                    size={16}
+                    size='{16}'
                     className='text-feedback-success mt-0.5 shrink-0'
                   />
                   <span>Academic profiles parsed cleanly.</span>
                 </div>
                 <div className='text-brand-dark flex items-start gap-2'>
                   <CheckCircle2Icon
-                    size={16}
+                    size='{16}'
                     className='text-feedback-success mt-0.5 shrink-0'
                   />
                   <span>Professional experiences cataloged.</span>
                 </div>
                 <div className='text-brand-dark flex items-start gap-2'>
                   <CheckCircle2Icon
-                    size={16}
+                    size='{16}'
                     className='text-feedback-success mt-0.5 shrink-0'
                   />
                   <span>

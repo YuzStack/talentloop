@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { ArrowRightIcon } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
-const categories = [
+interface SkillCategory {
+  title: string;
+  skills: string[];
+}
+
+const categories: SkillCategory[] = [
   {
     title: 'Technology',
     skills: [
@@ -10,6 +15,7 @@ const categories = [
       'Python',
       'Node.js',
       'AWS',
+      'Web Development',
       'Cybersecurity',
       'Data Analysis',
       'UI/UX Design',
@@ -25,6 +31,7 @@ const categories = [
       'Robotics',
       'Civil Planning',
       'Thermodynamics',
+      'Electrical Design',
     ],
   },
   {
@@ -53,27 +60,27 @@ const categories = [
 
 export default function SkillSelector() {
   const navigate = useNavigate();
-  const [selectedSkills, setSelectedSkills] = useState([]);
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
-  const toggleSkill = skill => {
+  const toggleSkill = (skill: string): void => {
     setSelectedSkills(prev =>
       prev.includes(skill) ? prev.filter(s => s !== skill) : [...prev, skill],
     );
   };
 
-  const handleProceed = () => {
+  const handleProceed = (): void => {
     if (selectedSkills.length === 0) return;
-    // Pass the selected skills into the router state history buffer safely
-    navigate('/assessment', { state: { skills: selectedSkills } });
+    // Pass the selected skills into the router state history buffer safely with type visibility
+    navigate('/testing-arena', { state: { skills: selectedSkills } });
   };
 
   return (
-    <div className='mx-auto max-w-5xl p-4 pb-32 md:p-8'>
+    <div className='bg-canvas-default mx-auto min-h-[calc(100vh-4rem)] max-w-5xl p-4 pb-32 font-sans md:p-8'>
       <div className='mb-8'>
         <h1 className='text-brand-dark text-2xl font-bold'>
           Interactive Skill Triage
         </h1>
-        <p className='text-brand-muted mt-1'>
+        <p className='text-brand-muted mt-1 text-sm'>
           Select the skills you currently possess to tailor your automated
           assessment parameters.
         </p>
@@ -82,20 +89,20 @@ export default function SkillSelector() {
       <div className='space-y-10'>
         {categories.map(category => (
           <div key={category.title}>
-            <h2 className='text-brand-secondary mb-4 text-sm font-semibold tracking-wide uppercase'>
+            <h2 className='text-brand-primary mb-4 text-xs font-bold tracking-wider uppercase'>
               {category.title}
             </h2>
             <div className='flex flex-wrap gap-3'>
               {category.skills.map(skill => {
-                const isSelected = selectedSkills.includes(skill);
+                const isSelected: boolean = selectedSkills.includes(skill);
                 return (
                   <button
                     key={skill}
                     onClick={() => toggleSkill(skill)}
-                    className={`inline-flex cursor-pointer items-center rounded-full border px-4 py-2 transition-all ${
+                    className={`inline-flex cursor-pointer items-center rounded-full border px-4 py-2 text-xs font-semibold shadow-sm transition-all ${
                       isSelected
-                        ? 'bg-brand-primary border-brand-primary text-white shadow-sm'
-                        : 'bg-canvas-inset border-border-subtle text-brand-dark hover:border-brand-primary hover:bg-canvas-panel'
+                        ? 'bg-brand-primary border-brand-primary text-white'
+                        : 'bg-canvas-panel border-border-subtle text-brand-muted hover:border-brand-primary/50 hover:bg-canvas-inset'
                     }`}
                   >
                     {skill}
@@ -107,11 +114,11 @@ export default function SkillSelector() {
         ))}
       </div>
 
-      {/* Sticky Bottom CTA */}
-      <div className='bg-canvas-panel border-border-subtle fixed right-0 bottom-0 left-0 z-20 border-t p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] md:left-64 md:p-6'>
+      {/* Sticky Bottom CTA Banner Card */}
+      <div className='bg-canvas-panel border-border-subtle fixed right-0 bottom-0 left-0 z-20 border-t p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.2)] md:left-64 md:p-6'>
         <div className='mx-auto flex max-w-5xl items-center justify-between'>
-          <div className='text-brand-muted text-sm'>
-            <span className='text-brand-dark font-bold'>
+          <div className='text-brand-muted text-sm font-medium'>
+            <span className='text-brand-primary font-black'>
               {selectedSkills.length}
             </span>{' '}
             skills selected
@@ -119,10 +126,10 @@ export default function SkillSelector() {
           <button
             onClick={handleProceed}
             disabled={selectedSkills.length === 0}
-            className={`inline-flex items-center gap-2 rounded-lg px-6 py-3 font-medium transition-colors ${
+            className={`inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-bold shadow-sm transition-colors ${
               selectedSkills.length > 0
                 ? 'bg-brand-primary hover:bg-brand-primary/90 cursor-pointer text-white'
-                : 'bg-canvas-inset text-brand-muted border-border-subtle cursor-not-allowed border'
+                : 'bg-canvas-inset text-brand-muted border-border-subtle cursor-not-allowed border opacity-40'
             }`}
           >
             Continue to Assessment

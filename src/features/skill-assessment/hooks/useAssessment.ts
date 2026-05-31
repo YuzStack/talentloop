@@ -1,11 +1,31 @@
-import { useQuery, useMutation } from '@tanstack/react-query';
-import { generateAssessmentQuestions } from '../../../services/gemini';
+import {
+  useQuery,
+  useMutation,
+  UseQueryResult,
+  UseMutationResult,
+} from '@tanstack/react-query';
+
+import {
+  generateAssessmentQuestions,
+  AssessmentQuestion,
+} from '../../../services/gemini';
 import { supabase } from '../../../services/supabase';
+
+// Explicit contract parameters shape for mutation data mapping injections
+export interface SubmitAssessmentParams {
+  userId: string;
+  discipline: string;
+  selectedSkills: string[];
+  verifiedScore: number;
+  rawPayload: any; // Dynamic payload array matching our structural execution outcomes
+}
 
 /**
  * React Query hook to fetch and cache Gemini AI generated multi-choice questions
  */
-export function useAssessmentQuestions(skills) {
+export function useAssessmentQuestions(
+  skills: string[],
+): UseQueryResult<AssessmentQuestion[], Error> {
   return useQuery({
     queryKey: ['assessmentQuestions', skills],
     queryFn: () => generateAssessmentQuestions(skills),
@@ -18,7 +38,11 @@ export function useAssessmentQuestions(skills) {
 /**
  * Mutation hook to log exam data into public.assessments inside Supabase
  */
-export function useSubmitAssessment() {
+export function useSubmitAssessment(): UseMutationResult<
+  any,
+  Error,
+  SubmitAssessmentParams
+> {
   return useMutation({
     mutationFn: async ({
       userId,
@@ -26,7 +50,7 @@ export function useSubmitAssessment() {
       selectedSkills,
       verifiedScore,
       rawPayload,
-    }) => {
+    }: SubmitAssessmentParams) => {
       const { data, error } = await supabase
         .from('assessments')
         .insert([
