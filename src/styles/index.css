@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import 'tailwindcss';
+
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* Rebranded Luxury Midnight Indigo Palette (Dark Mode First) */
+  --color-canvas-default: #090d16; /* Sleek, deep dark blue canvas background */
+  --color-canvas-panel: #111827; /* Charcoal dark gray for bento cards */
+  --color-canvas-inset: #1f2937; /* Slate grey for deep inputs and sections */
+
+  --color-brand-primary: #7c3aed; /* Vibrant Violet for primary CTA buttons */
+  --color-brand-secondary: #10b981; /* Emerald green for high matching metrics */
+  --color-brand-dark: #f9fafb; /* High-contrast crisp white for header texts */
+  --color-brand-muted: #9ca3af; /* Slate grey for descriptions and sub-labels */
+
+  --color-border-subtle: #374151; /* Slate 700 for layout borders and dividers */
+  --color-border-focus: #a78bfa; /* Focused violet styling borders */
+
+  /* Semantic System Feedback Accent Hooks */
+  --color-feedback-success: #10b981;
+  --color-feedback-warning: #f59e0b;
+  --color-feedback-danger: #ef4444;
+}
+
+@keyframes loading-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}

@@ -1,3 +1,182 @@
+# TalentLoop Codebase Consolidation
+
+This file contains the full repository codebase, excluding `.git` and `node_modules`.
+
+## Included Files
+
+- `.env`
+- `.gitignore`
+- `.prettierrc`
+- `CONSOLIDATE.md`
+- `README.md`
+- `eslint.config.js`
+- `index.html`
+- `package-lock.json`
+- `package.json`
+- `src/components/AppLayout.tsx`
+- `src/components/Header.tsx`
+- `src/components/ProtectedRoute.tsx`
+- `src/components/Sidebar.tsx`
+- `src/components/Spinner.tsx`
+- `src/features/authentication/hooks/useSettings.ts`
+- `src/features/authentication/hooks/useUser.ts`
+- `src/features/authentication/pages/ForgotPassword.tsx`
+- `src/features/authentication/pages/Login.tsx`
+- `src/features/authentication/pages/ResetPassword.tsx`
+- `src/features/authentication/pages/Settings.tsx`
+- `src/features/authentication/pages/Signup.tsx`
+- `src/features/career-recommendation/hooks/useRecommendations.ts`
+- `src/features/career-recommendation/pages/RecommendationsPage.tsx`
+- `src/features/career-recommendation/pages/RoadmapView.tsx`
+- `src/features/cv-processing/pages/CvUploadPage.tsx`
+- `src/features/cv-processing/services/cvService.ts`
+- `src/features/dashboard/hooks/useDashboardData.ts`
+- `src/features/dashboard/pages/HomePage.tsx`
+- `src/features/skill-assessment/hooks/useAssessment.ts`
+- `src/features/skill-assessment/pages/SkillSelector.tsx`
+- `src/features/skill-assessment/pages/TestingArena.tsx`
+- `src/main.tsx`
+- `src/routes.tsx`
+- `src/services/apiAuth.ts`
+- `src/services/apiRecommendations.ts`
+- `src/services/gemini.ts`
+- `src/services/supabase.ts`
+- `src/styles/index.css`
+- `tsconfig.json`
+- `vercel.json`
+- `vite.config.js`
+
+---
+
+## `.env`
+
+```text
+VITE_SUPABASE_URL=REDACTED
+VITE_SUPABASE_PUBLISHABLE_KEY=REDACTED
+VITE_GEMINI_API_KEY=REDACTED
+```
+
+## `.gitignore`
+
+```text
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.env
+```
+
+## `.prettierrc`
+
+```text
+{
+  "singleQuote": true,
+  "jsxSingleQuote": true,
+  "arrowParens": "avoid",
+  "plugins": ["prettier-plugin-tailwindcss"]
+}
+```
+
+## `CONSOLIDATE.md`
+
+This file is generated from the repository contents.
+
+## `README.md`
+
+```markdown
+# React + Tailwind +  Vite
+
+This template provides a minimal setup to get React and Tailwind working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the ESLint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```
+
+## `eslint.config.js`
+
+```javascript
+import js from '@eslint/js'
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import { defineConfig, globalIgnores } from 'eslint/config'
+
+export default defineConfig([
+  globalIgnores(['dist']),
+  {
+    files: ['**/*.{js,jsx}'],
+    extends: [
+      js.configs.recommended,
+      reactHooks.configs.flat.recommended,
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+      },
+    },
+    rules: {
+      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+    },
+  },
+])
+```
+
+## `index.html`
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+```
+
+## `package-lock.json`
+
+```json
 {
   "name": "template-repo-2",
   "version": "0.0.0",
@@ -4213,3 +4392,3643 @@
     }
   }
 }
+```
+
+## `package.json`
+
+```json
+{
+  "name": "template-repo-2",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@google/genai": "^2.3.0",
+    "@supabase/supabase-js": "^2.105.4",
+    "@tailwindcss/vite": "^4.1.18",
+    "@tanstack/react-query": "^5.100.11",
+    "lucide-react": "^1.16.0",
+    "motion": "^12.39.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.76.0",
+    "react-hot-toast": "^2.6.0",
+    "react-router": "^7.15.1",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.1",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "prettier": "^3.7.4",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "vite": "^7.2.4"
+  }
+}
+```
+
+## `src/components/AppLayout.tsx`
+
+```tsx
+import { useEffect, useState } from 'react';
+import { Outlet, useLocation } from 'react-router';
+
+import { Sidebar } from './Sidebar';
+import Header from './Header';
+
+export default function AppLayout() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    // eslint-disable-next-line
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  return (
+    <div className='bg-canvas-default text-brand-dark flex min-h-screen font-sans'>
+      <Sidebar
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
+        isMobile={isMobile}
+      />
+
+      <div className='flex min-w-0 flex-1 flex-col'>
+        <Header onMenuClick={() => setIsMobileMenuOpen(true)} />
+
+        <main className='flex-1 overflow-auto'>
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+}
+```
+
+## `src/components/Header.tsx`
+
+```tsx
+import { MenuIcon, LogOutIcon } from 'lucide-react';
+import { useUser, useLogout } from '../features/authentication/hooks/useUser';
+
+export default function Header({ onMenuClick }) {
+  const { profile, isLoading: isLoadingProfile } = useUser();
+  const { logout, isLoggingOut } = useLogout();
+
+  // Extract initialization letters safely from the profile row
+  const initials = profile?.full_name
+    ? profile.full_name
+        .split(' ')
+        .map(n => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2)
+    : 'ST';
+
+  return (
+    <header className='bg-canvas-panel border-border-subtle sticky top-0 z-30 flex h-16 items-center justify-between border-b px-4 font-sans md:px-8'>
+      <div className='flex items-center gap-4'>
+        {/* Mobile Hamburger Menu Toggle Button */}
+        <button
+          onClick={onMenuClick}
+          className='text-brand-muted hover:text-brand-dark hover:bg-canvas-inset -ml-2 cursor-pointer rounded-lg p-2 md:hidden'
+        >
+          <MenuIcon size={24} />
+        </button>
+      </div>
+
+      <div className='flex items-center gap-3 pl-4 md:pl-6'>
+        {/* Student Label Metadata Card Block */}
+        <div className='hidden text-right select-none md:block'>
+          <p className='text-brand-dark max-w-xs truncate text-sm font-semibold'>
+            {profile
+              ? profile.full_name
+              : isLoadingProfile
+                ? 'Loading Student...'
+                : 'Logging out...'}
+          </p>
+          <p className='text-brand-muted text-xs'>Student Session</p>
+        </div>
+
+        {/* Dynamic Image or Initials Text Badge Container */}
+        <div className='bg-brand-secondary border-canvas-panel relative flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 text-sm font-semibold text-white shadow-sm select-none'>
+          {profile?.avatar_url ? (
+            <img
+              src={profile.avatar_url}
+              alt='User Profile'
+              className='h-full w-full object-cover'
+            />
+          ) : (
+            initials
+          )}
+        </div>
+
+        {/* Global Sign Out Button Layer */}
+        <button
+          onClick={() => logout()}
+          disabled={isLoggingOut}
+          className='text-brand-muted hover:text-feedback-danger hover:bg-canvas-inset ml-2 cursor-pointer rounded-lg p-2 transition-colors disabled:opacity-30'
+          title='Sign Out'
+        >
+          <LogOutIcon size={18} />
+        </button>
+      </div>
+    </header>
+  );
+}
+```
+
+## `src/components/ProtectedRoute.tsx`
+
+```tsx
+import { Navigate } from 'react-router';
+
+import { useUser } from '../features/authentication/hooks/useUser';
+import Spinner from './Spinner';
+
+export default function ProtectedRoute({ children }) {
+  const { isAuthenticated, isLoading } = useUser();
+
+  if (isLoading) {
+    return (
+      <div className='bg-canvas-default flex min-h-screen items-center justify-center font-sans'>
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to='/login' replace />;
+  }
+
+  if (isAuthenticated) return children;
+}
+```
+
+## `src/components/Sidebar.tsx`
+
+```tsx
+import {
+  LayoutDashboardIcon,
+  UploadCloudIcon,
+  CheckSquareIcon,
+  BriefcaseIcon,
+  MapIcon,
+  SettingsIcon,
+  XIcon,
+} from 'lucide-react';
+// eslint-disable-next-line
+import { motion, AnimatePresence } from 'motion/react';
+import { NavLink } from 'react-router';
+
+const navItems = [
+  {
+    path: '/',
+    label: 'Dashboard',
+    icon: LayoutDashboardIcon,
+  },
+  {
+    path: '/cv-upload',
+    label: 'CV Upload',
+    icon: UploadCloudIcon,
+  },
+  {
+    path: '/skill-selector',
+    label: 'Skill Assessment',
+    icon: CheckSquareIcon,
+  },
+  {
+    path: '/recommendations',
+    label: 'Recommendations',
+    icon: BriefcaseIcon,
+  },
+  {
+    path: '/roadmap',
+    label: 'Roadmap',
+    icon: MapIcon,
+  },
+  {
+    path: '/settings',
+    label: 'Settings',
+    icon: SettingsIcon,
+  },
+];
+
+export function Sidebar({ isOpen, onClose, isMobile }) {
+  const sidebarContent = (
+    <div className='bg-canvas-panel border-border-subtle h-full w-64 border-r p-6'>
+      <div className='mb-8 flex items-center justify-between'>
+        <div className='flex items-center gap-2'>
+          <div className='bg-brand-primary flex h-8 w-8 items-center justify-center rounded text-xl font-bold text-white'>
+            S
+          </div>
+          <span className='text-brand-dark text-xl font-bold'>SkillBridge</span>
+        </div>
+        {isMobile && (
+          <button
+            onClick={onClose}
+            className='text-brand-muted hover:text-brand-dark p-1'
+          >
+            <XIcon size={20} />
+          </button>
+        )}
+      </div>
+
+      <nav className='space-y-2'>
+        {navItems.map(item => {
+          const Icon = item.icon;
+          return (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              onClick={isMobile ? onClose : undefined}
+              className={({ isActive }) =>
+                `relative flex items-center gap-3 overflow-hidden rounded-lg px-4 py-3 transition-colors ${isActive ? 'text-brand-primary bg-canvas-inset font-medium' : 'text-brand-muted hover:text-brand-dark hover:bg-canvas-inset'}`
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  {isActive && (
+                    <div className='bg-brand-primary absolute top-0 bottom-0 left-0 w-0.75' />
+                  )}
+                  <Icon size={20} />
+                  <span>{item.label}</span>
+                </>
+              )}
+            </NavLink>
+          );
+        })}
+      </nav>
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            <motion.div
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                opacity: 1,
+              }}
+              exit={{
+                opacity: 0,
+              }}
+              onClick={onClose}
+              className='bg-brand-dark/20 fixed inset-0 z-40 backdrop-blur-sm'
+            />
+
+            <motion.div
+              initial={{
+                x: '-100%',
+              }}
+              animate={{
+                x: 0,
+              }}
+              exit={{
+                x: '-100%',
+              }}
+              transition={{
+                type: 'spring',
+                bounce: 0,
+                duration: 0.4,
+              }}
+              className='fixed inset-y-0 left-0 z-50 shadow-2xl'
+            >
+              {sidebarContent}
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    );
+  }
+  return (
+    <div className='sticky top-0 hidden h-screen md:block'>
+      {sidebarContent}
+    </div>
+  );
+}
+```
+
+## `src/components/Spinner.tsx`
+
+```tsx
+export default function Spinner() {
+  return (
+    <div className='border-brand-primary m-5 size-12.5 animate-spin rounded-full border-5 border-t-transparent ease-in-out md:bottom-6'></div>
+  );
+}
+```
+
+## `src/features/authentication/hooks/useSettings.ts`
+
+```ts
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+
+import {
+  updateProfileDetails,
+  uploadAvatarImage,
+  updateUserPassword,
+  deleteUserAccountComplete,
+  sendPasswordResetEmail,
+} from '../../../services/apiAuth';
+
+export function useUpdateSettings() {
+  const queryClient = useQueryClient();
+
+  const { mutate: updateProfile, isPending: isUpdatingProfile } = useMutation({
+    mutationFn: async ({ userId, fullName, university, imageFile }) => {
+      let avatarUrl = null;
+      if (imageFile) {
+        avatarUrl = await uploadAvatarImage(imageFile, userId);
+      }
+      return updateProfileDetails({ userId, fullName, university, avatarUrl });
+    },
+    onSuccess: () => {
+      toast.success('Personal profile details updated successfully!');
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+    onError: err => toast.error(err.message),
+  });
+
+  const { mutate: updatePassword, isPending: isUpdatingPassword } = useMutation(
+    {
+      mutationFn: updateUserPassword,
+      onSuccess: () => toast.success('Security password altered successfully!'),
+      onError: err => toast.error(err.message),
+    },
+  );
+
+  const { mutate: deleteAccount, isPending: isDeleting } = useMutation({
+    mutationFn: deleteUserAccountComplete,
+    onSuccess: () => {
+      toast.success('Account profile wiped out.');
+      window.location.href = '/login';
+    },
+    onError: err => toast.error(err.message),
+  });
+
+  return {
+    updateProfile,
+    isUpdatingProfile,
+    updatePassword,
+    isUpdatingPassword,
+    deleteAccount,
+    isDeleting,
+  };
+}
+
+/**
+ * React Query mutation managing the recovery dispatch lifecycle state
+ */
+export function useForgotPassword() {
+  return useMutation({
+    mutationFn: sendPasswordResetEmail,
+  });
+}
+```
+
+## `src/features/authentication/hooks/useUser.ts`
+
+```ts
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router';
+
+import {
+  getCurrentUser,
+  loginUser,
+  logoutUser,
+  signUpUser,
+} from '../../../services/apiAuth';
+
+/**
+ * Hook to retrieve and track the current logged-in user state
+ */
+export function useUser() {
+  const {
+    isLoading,
+    data: user,
+    error,
+  } = useQuery({
+    queryKey: ['user'],
+    queryFn: getCurrentUser,
+    retry: false, // Don't continuously retry auth checks if unauthenticated
+  });
+
+  return {
+    isLoading,
+    user,
+    profile: user?.profile || null,
+    isAuthenticated: user?.role === 'authenticated',
+    error,
+  };
+}
+
+/**
+ * Hook to run the sign-up operation via mutations
+ */
+export function useSignup() {
+  const queryClient = useQueryClient();
+
+  const { mutate: signup, isPending: isSigningUp } = useMutation({
+    mutationFn: signUpUser,
+    onSuccess: data => {
+      // Set the user query data cache directly to log them in instantly
+      queryClient.setQueryData(['user'], data.user);
+    },
+  });
+
+  return { signup, isSigningUp };
+}
+
+/**
+ * Hook to run the login operation via mutations
+ */
+export function useLogin() {
+  const queryClient = useQueryClient();
+
+  const { mutate: login, isPending: isLoggingIn } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: data => {
+      queryClient.setQueryData(['user'], data.user);
+      queryClient.invalidateQueries({ queryKey: ['user'] });
+    },
+  });
+
+  return { login, isLoggingIn };
+}
+
+/**
+ * Hook to terminate the session context wrapper
+ */
+export function useLogout() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const { mutate: logout, isPending: isLoggingOut } = useMutation({
+    mutationFn: logoutUser,
+    onSuccess: () => {
+      queryClient.clear(); // Clear all cached query states on sign out
+      navigate('/login', { replace: true });
+    },
+  });
+
+  return { logout, isLoggingOut };
+}
+```
+
+## `src/features/authentication/pages/ForgotPassword.tsx`
+
+```tsx
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router';
+import { CheckCircle2Icon, ArrowLeftIcon } from 'lucide-react';
+import { useForgotPassword } from '../hooks/useSettings';
+import toast from 'react-hot-toast';
+
+export default function ForgotPassword() {
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { mutate: sendResetEmail, isPending } = useForgotPassword();
+
+  // Initialize your React Hook Form controller context
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm();
+
+  const currentEmail = getValues('email');
+
+  const onSubmit = data => {
+    sendResetEmail(data.email, {
+      onSuccess: () => {
+        setIsSubmitted(true);
+        toast.success('Recovery link sent successfully.');
+      },
+      onError: err => {
+        toast.error(err.message || 'Failed to dispatch recovery parameters.');
+      },
+    });
+  };
+
+  const handleResend = () => {
+    if (!currentEmail) return;
+    sendResetEmail(currentEmail, {
+      onSuccess: () => {
+        toast.success('A fresh recovery token link has been resent.');
+      },
+      onError: err => {
+        toast.error(err.message);
+      },
+    });
+  };
+
+  return (
+    <div className='bg-canvas-default flex min-h-screen items-center justify-center p-4 font-sans'>
+      <div className='bg-canvas-panel border-border-subtle w-full max-w-md rounded-2xl border p-8 shadow-md'>
+        {/* Dynamic Success State Alert Banner */}
+        {isSubmitted && (
+          <div className='bg-feedback-success/10 border-feedback-success/30 mb-6 flex items-start gap-3 rounded-lg border p-4 transition-all'>
+            <CheckCircle2Icon
+              className='text-feedback-success mt-0.5 shrink-0'
+              size={20}
+            />
+            <div>
+              <h3 className='text-feedback-success text-sm font-bold'>
+                Email sent successfully
+              </h3>
+              <p className='text-feedback-success/80 mt-1 text-xs leading-relaxed'>
+                Check your inbox at{' '}
+                <span className='text-brand-dark font-semibold'>
+                  {currentEmail}
+                </span>{' '}
+                for instructions to reset your password.
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Header Icon Block */}
+        <div className='mb-8 text-center select-none'>
+          <div className='bg-canvas-inset border-border-subtle text-brand-dark mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl border shadow-sm'>
+            <svg
+              className='text-brand-muted h-5 w-5'
+              fill='none'
+              viewBox='0 0 24 24'
+              stroke='currentColor'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z'
+              />
+            </svg>
+          </div>
+          <h1 className='text-brand-dark mb-2 text-xl font-bold'>
+            Reset password
+          </h1>
+          <p className='text-brand-muted text-sm'>
+            We'll send you an email with a secure link to restore access.
+          </p>
+        </div>
+
+        {!isSubmitted ? (
+          <form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
+            <div>
+              <label className='text-brand-dark mb-1.5 block text-xs font-semibold'>
+                Email Address
+              </label>
+              <input
+                type='email'
+                disabled={isPending}
+                {...register('email', {
+                  required: 'Email address is required',
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: 'Invalid email formatting match',
+                  },
+                })}
+                className={`bg-canvas-inset border-border-subtle text-brand-dark w-full rounded-lg border px-4 py-2.5 text-sm transition-colors focus:outline-none ${errors.email ? 'border-feedback-danger focus:border-feedback-danger' : 'focus:border-border-focus'}`}
+                placeholder='Enter your school or personal email'
+              />
+              {errors.email && (
+                <p className='text-feedback-danger text-xxs mt-1 font-bold'>
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+
+            <button
+              type='submit'
+              disabled={isPending}
+              className='bg-brand-primary hover:bg-brand-primary/90 w-full cursor-pointer rounded-lg px-4 py-2.5 text-sm font-semibold text-white transition-colors disabled:opacity-50'
+            >
+              {isPending ? 'Sending Link...' : 'Send reset link'}
+            </button>
+          </form>
+        ) : (
+          <button
+            onClick={handleResend}
+            disabled={isPending}
+            className='bg-canvas-inset text-brand-dark border-border-subtle hover:bg-canvas-default w-full cursor-pointer rounded-lg border px-4 py-2.5 text-sm font-semibold transition-colors disabled:opacity-50'
+          >
+            {isPending ? 'Re-sending Link...' : 'Resend email link'}
+          </button>
+        )}
+
+        {/* Bottom Return Route Navigation Link */}
+        <div className='mt-8 text-center'>
+          <Link
+            to='/login'
+            className='text-brand-muted hover:text-brand-dark inline-flex items-center gap-2 text-xs font-semibold transition-colors'
+          >
+            <ArrowLeftIcon size={14} />
+            Back to log in
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+## `src/features/authentication/pages/Login.tsx`
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router';
+import toast from 'react-hot-toast';
+
+import { useLogin } from '../hooks/useUser';
+
+export default function Login() {
+  const { login, isLoggingIn } = useLogin();
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = data => {
+    login(
+      { email: data.email, password: data.password },
+      {
+        onSuccess: () => {
+          toast.success('Logged in successfully!');
+          navigate('/');
+        },
+        onError: err => {
+          toast.error(err.message || 'Authentication credentials rejected.');
+        },
+      },
+    );
+  };
+
+  return (
+    <div className='bg-canvas-default flex min-h-screen items-center justify-center p-4'>
+      <div className='bg-canvas-panel border-border-subtle w-full max-w-md rounded-2xl border p-8 shadow-md'>
+        <div className='mb-8 text-center'>
+          <div className='bg-brand-primary mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl text-2xl font-bold text-white'>
+            S
+          </div>
+          <h1 className='text-brand-dark mb-2 text-2xl font-bold'>
+            Welcome back
+          </h1>
+          <p className='text-brand-muted'>
+            Enter your details to access your dashboard.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
+          <div>
+            <label className='text-brand-dark mb-1.5 block text-sm font-medium'>
+              Email
+            </label>
+            <input
+              type='email'
+              {...register('email', { required: 'Email is required' })}
+              className={`bg-canvas-inset border-border-subtle text-brand-dark w-full rounded-lg border px-4 py-2.5 transition-colors focus:outline-none ${errors.email ? 'border-feedback-danger focus:border-feedback-danger' : 'focus:border-border-focus'}`}
+              placeholder='Enter your email'
+            />
+            {errors.email && (
+              <p className='text-feedback-danger mt-1 text-xs'>
+                {errors.email.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <div className='mb-1.5 flex items-center justify-between'>
+              <label className='text-brand-dark block text-sm font-medium'>
+                Password
+              </label>
+              <Link
+                to='/forgot-password'
+                className='text-brand-primary text-sm hover:underline'
+              >
+                Forgot password?
+              </Link>
+            </div>
+            <input
+              type='password'
+              {...register('password', { required: 'Password is required' })}
+              className={`bg-canvas-inset border-border-subtle text-brand-dark w-full rounded-lg border px-4 py-2.5 transition-colors focus:outline-none ${errors.password ? 'border-feedback-danger focus:border-feedback-danger' : 'focus:border-border-focus'}`}
+              placeholder='••••••••'
+            />
+            {errors.password && (
+              <p className='text-feedback-danger mt-1 text-xs'>
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+
+          <button
+            type='submit'
+            disabled={isLoggingIn}
+            className='bg-brand-primary hover:bg-brand-primary/90 w-full rounded-lg px-4 py-2.5 font-medium text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50'
+          >
+            {isLoggingIn ? 'Signing In...' : 'Sign In'}
+          </button>
+        </form>
+
+        <p className='text-brand-muted mt-8 text-center text-sm'>
+          Don't have an account?{' '}
+          <Link
+            to='/signup'
+            className='text-brand-primary font-medium hover:underline'
+          >
+            Sign up
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}
+```
+
+## `src/features/authentication/pages/ResetPassword.tsx`
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import { useUpdateSettings } from '../hooks/useSettings';
+import toast from 'react-hot-toast';
+
+export default function ResetPassword() {
+  const navigate = useNavigate();
+  const { updatePassword, isUpdatingPassword } = useUpdateSettings();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = data => {
+    updatePassword(data.newPassword, {
+      onSuccess: () => {
+        toast.success('Password updated successfully! Please log in.');
+        navigate('/login', { replace: true });
+      },
+    });
+  };
+
+  return (
+    <div className='bg-canvas-default flex min-h-screen items-center justify-center p-4 font-sans'>
+      <div className='bg-canvas-panel border-border-subtle w-full max-w-md rounded-2xl border p-8 shadow-md'>
+        <div className='mb-8 text-center'>
+          <h1 className='text-brand-dark mb-2 text-2xl font-bold'>
+            Create new password
+          </h1>
+          <p className='text-brand-muted text-sm'>
+            Type your new secure account credentials below.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
+          <div>
+            <label className='text-brand-dark mb-1.5 block text-xs font-semibold'>
+              New Password
+            </label>
+            <input
+              type='password'
+              placeholder='Minimum 8 characters'
+              {...register('newPassword', {
+                required: 'Password is required',
+                minLength: {
+                  value: 8,
+                  message: 'Password must be at least 8 characters',
+                },
+              })}
+              className={`bg-canvas-inset border-border-subtle text-brand-dark focus:border-border-focus w-full rounded-lg border px-4 py-2.5 text-sm focus:outline-none`}
+            />
+            {errors.newPassword && (
+              <p className='text-feedback-danger text-xxs mt-1 font-bold'>
+                {errors.newPassword.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className='text-brand-dark mb-1.5 block text-xs font-semibold'>
+              Confirm New Password
+            </label>
+            <input
+              type='password'
+              placeholder='Repeat new password'
+              {...register('confirmPassword', {
+                required: 'Please confirm your new password',
+                validate: val =>
+                  val === getValues('newPassword') ||
+                  'The passwords do not match',
+              })}
+              className={`bg-canvas-inset border-border-subtle text-brand-dark focus:border-border-focus w-full rounded-lg border px-4 py-2.5 text-sm focus:outline-none`}
+            />
+            {errors.confirmPassword && (
+              <p className='text-feedback-danger text-xxs mt-1 font-bold'>
+                {errors.confirmPassword.message}
+              </p>
+            )}
+          </div>
+
+          <button
+            type='submit'
+            disabled={isUpdatingPassword}
+            className='bg-brand-primary hover:bg-brand-primary/90 w-full cursor-pointer rounded-lg px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors disabled:opacity-50'
+          >
+            {isUpdatingPassword ? 'Saving Password...' : 'Reset Password'}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+```
+
+## `src/features/authentication/pages/Settings.tsx`
+
+```tsx
+import { useRef, useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { CameraIcon, Trash2Icon } from 'lucide-react';
+import toast from 'react-hot-toast';
+
+import { useUser } from '../hooks/useUser';
+import { useUpdateSettings } from '../hooks/useSettings';
+import Spinner from '../../../components/Spinner';
+
+export default function Settings() {
+  const { user, profile, isLoading } = useUser();
+  const {
+    updateProfile,
+    isUpdatingProfile,
+    updatePassword,
+    isUpdatingPassword,
+    deleteAccount,
+    isDeleting,
+  } = useUpdateSettings();
+
+  const fileInputRef = useRef(null);
+  const [avatarPreview, setAvatarPreview] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  // Initialize independent Hook Form controllers
+  const {
+    register: registerProfile,
+    handleSubmit: handleProfileSubmit,
+    setValue,
+  } = useForm();
+  const {
+    register: registerPassword,
+    handleSubmit: handlePasswordSubmit,
+    getValues,
+    reset: resetPasswordForm,
+    formState: { errors: passwordErrors },
+  } = useForm();
+
+  // Load baseline profile defaults into inputs when user schema arrives
+  useEffect(() => {
+    if (profile) {
+      setValue('fullName', profile.full_name);
+      setValue('university', profile.university || 'Kwara State University');
+      // eslint-disable-next-line
+      if (profile.avatar_url) setAvatarPreview(profile.avatar_url);
+    }
+  }, [profile, setValue]);
+
+  if (isLoading) {
+    return (
+      <div className='bg-canvas-default flex min-h-[calc(100vh-4rem)] items-center justify-center'>
+        <Spinner />
+      </div>
+    );
+  }
+
+  const handleImageChange = e => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 1024 * 1024) {
+        toast.error('Avatar file boundaries must stay below 1MB.');
+        return;
+      }
+      setSelectedFile(file);
+      setAvatarPreview(URL.createObjectURL(file));
+    }
+  };
+
+  const onProfileSave = data => {
+    updateProfile({
+      userId: user.id,
+      fullName: data.fullName,
+      university: data.university,
+      imageFile: selectedFile,
+    });
+  };
+
+  const onPasswordSave = data => {
+    updatePassword(data.newPassword, {
+      onSuccess: () => resetPasswordForm(),
+    });
+  };
+
+  const handleDeleteAccount = () => {
+    if (
+      window.confirm(
+        'CRITICAL WARNING: Are you absolutely sure you want to delete your SkillBridge account? This will permanently wipe your profile, scores, history, and roadmaps. This action cannot be undone.',
+      )
+    ) {
+      deleteAccount();
+    }
+  };
+
+  const initials = profile?.full_name
+    ? profile.full_name
+        .split(' ')
+        .map(n => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2)
+    : 'ST';
+
+  return (
+    <div className='bg-canvas-default mx-auto min-h-[calc(100vh-4rem)] max-w-4xl space-y-8 p-4 font-sans md:p-8'>
+      <div>
+        <h1 className='text-brand-dark text-2xl font-bold'>Profile Settings</h1>
+        <p className='text-brand-muted mt-1 text-sm'>
+          Manage your account details and preferences.
+        </p>
+      </div>
+
+      <input
+        type='file'
+        ref={fileInputRef}
+        onChange={handleImageChange}
+        accept='image/*'
+        className='hidden'
+      />
+
+      {/* BLOCK 1: PERSONAL DETAILS */}
+      <form
+        onSubmit={handleProfileSubmit(onProfileSave)}
+        className='bg-canvas-panel border-border-subtle overflow-hidden rounded-2xl border shadow-sm'
+      >
+        <div className='space-y-6 p-6 md:p-8'>
+          <h2 className='text-brand-dark border-border-subtle border-b pb-3 text-base font-bold'>
+            Personal Information
+          </h2>
+
+          <div className='flex flex-col items-start gap-8 md:flex-row'>
+            <div className='mx-auto shrink-0 text-center md:mx-0'>
+              <div
+                onClick={() => fileInputRef.current?.click()}
+                className='bg-brand-secondary border-canvas-panel group relative flex h-24 w-24 cursor-pointer items-center justify-center overflow-hidden rounded-full border-4 text-3xl font-bold text-white shadow-sm'
+              >
+                {avatarPreview ? (
+                  <img
+                    src={avatarPreview}
+                    alt='Profile Avatar'
+                    className='h-full w-full object-cover'
+                  />
+                ) : (
+                  initials
+                )}
+                <div className='bg-brand-dark/40 absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100'>
+                  <CameraIcon size={20} />
+                </div>
+              </div>
+              <p className='text-brand-muted text-xxs mt-3 font-semibold tracking-wider uppercase'>
+                Max Size 1MB
+              </p>
+            </div>
+
+            <div className='w-full flex-1 space-y-5'>
+              <div className='grid grid-cols-1 gap-5 md:grid-cols-2'>
+                <div>
+                  <label className='text-brand-dark mb-1.5 block text-xs font-semibold'>
+                    Full Name
+                  </label>
+                  <input
+                    type='text'
+                    {...registerProfile('fullName', { required: true })}
+                    className='bg-canvas-inset border-border-subtle text-brand-dark focus:border-border-focus w-full rounded-lg border px-4 py-2.5 text-sm transition-colors focus:outline-none'
+                  />
+                </div>
+                <div>
+                  <label className='text-brand-dark mb-1.5 block text-xs font-semibold opacity-60'>
+                    Email Address (Locked)
+                  </label>
+                  <input
+                    type='email'
+                    defaultValue={profile?.email}
+                    disabled
+                    className='bg-canvas-inset/60 border-border-subtle text-brand-dark/50 w-full cursor-not-allowed rounded-lg border px-4 py-2.5 text-sm focus:outline-none'
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className='text-brand-dark mb-1.5 block text-xs font-semibold'>
+                  University / Institution
+                </label>
+                <input
+                  type='text'
+                  {...registerProfile('university', { required: true })}
+                  className='bg-canvas-inset border-border-subtle text-brand-dark focus:border-border-focus w-full rounded-lg border px-4 py-2.5 text-sm transition-colors focus:outline-none'
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className='bg-canvas-inset border-border-subtle flex justify-end gap-3 border-t p-4 md:px-8'>
+          <button
+            type='submit'
+            disabled={isUpdatingProfile}
+            className='bg-brand-primary hover:bg-brand-primary/90 cursor-pointer rounded-lg px-5 py-2 text-sm font-semibold text-white shadow-sm transition-colors disabled:opacity-50'
+          >
+            {isUpdatingProfile ? 'Saving Details...' : 'Save Personal Details'}
+          </button>
+        </div>
+      </form>
+
+      {/* BLOCK 2: PASSWORD SECURITY */}
+      <form
+        onSubmit={handlePasswordSubmit(onPasswordSave)}
+        className='bg-canvas-panel border-border-subtle overflow-hidden rounded-2xl border shadow-sm'
+      >
+        <div className='space-y-5 p-6 md:p-8'>
+          <h2 className='text-brand-dark border-border-subtle border-b pb-3 text-base font-bold'>
+            Security Credentials
+          </h2>
+
+          <div className='grid max-w-2xl grid-cols-1 gap-5 md:grid-cols-2'>
+            <div>
+              <label className='text-brand-dark mb-1.5 block text-xs font-semibold'>
+                New Password
+              </label>
+              <input
+                type='password'
+                placeholder='Minimum 8 characters'
+                {...registerPassword('newPassword', {
+                  required: 'Password is required',
+                  minLength: {
+                    value: 8,
+                    message: 'Password must match minimum 8 chars',
+                  },
+                })}
+                className='bg-canvas-inset border-border-subtle text-brand-dark focus:border-border-focus w-full rounded-lg border px-4 py-2.5 text-sm transition-colors focus:outline-none'
+              />
+              {passwordErrors.newPassword && (
+                <p className='text-feedback-danger text-xxs mt-1 font-bold'>
+                  {passwordErrors.newPassword.message}
+                </p>
+              )}
+            </div>
+            <div>
+              <label className='text-brand-dark mb-1.5 block text-xs font-semibold'>
+                Confirm New Password
+              </label>
+              <input
+                type='password'
+                placeholder='Repeat password'
+                {...registerPassword('confirmPassword', {
+                  required: 'Please confirm password',
+                  validate: val =>
+                    val === getValues('newPassword') ||
+                    'The inputs do not match',
+                })}
+                className='bg-canvas-inset border-border-subtle text-brand-dark focus:border-border-focus w-full rounded-lg border px-4 py-2.5 text-sm transition-colors focus:outline-none'
+              />
+              {passwordErrors.confirmPassword && (
+                <p className='text-feedback-danger text-xxs mt-1 font-bold'>
+                  {passwordErrors.confirmPassword.message}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className='bg-canvas-inset border-border-subtle flex justify-end gap-3 border-t p-4 md:px-8'>
+          <button
+            type='submit'
+            disabled={isUpdatingPassword}
+            className='bg-brand-primary hover:bg-brand-primary/90 cursor-pointer rounded-lg px-5 py-2 text-sm font-semibold text-white shadow-sm transition-colors disabled:opacity-50'
+          >
+            {isUpdatingPassword ? 'Updating Security...' : 'Update Password'}
+          </button>
+        </div>
+      </form>
+
+      {/* BLOCK 3: DANGER AREA ACCOUNT DELETION */}
+      <div className='bg-canvas-panel border-feedback-danger/30 overflow-hidden rounded-2xl border shadow-sm'>
+        <div className='space-y-3 p-6 md:p-8'>
+          <h2 className='text-feedback-danger border-border-subtle border-b pb-3 text-base font-bold'>
+            Danger Zone
+          </h2>
+          <p className='text-brand-muted max-w-2xl text-xs leading-relaxed'>
+            Once you delete your account, there is no going back. All your
+            logged metadata information, active learning tracks, and quiz
+            history will be scrubbed instantly from the primary system nodes.
+          </p>
+        </div>
+        <div className='bg-feedback-danger/5 flex justify-start p-4 md:px-8'>
+          <button
+            type='button'
+            onClick={handleDeleteAccount}
+            disabled={isDeleting}
+            className='bg-feedback-danger hover:bg-feedback-danger/90 inline-flex cursor-pointer items-center gap-2 rounded-lg px-5 py-2 text-sm font-semibold text-white shadow-sm transition-colors disabled:opacity-50'
+          >
+            <Trash2Icon size={14} />{' '}
+            {isDeleting
+              ? 'Wiping Account...'
+              : 'Permanently Delete SkillBridge Account'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+## `src/features/authentication/pages/Signup.tsx`
+
+```tsx
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router';
+import toast from 'react-hot-toast';
+
+import { useSignup } from '../hooks/useUser';
+
+export default function Signup() {
+  const { signup, isSigningUp } = useSignup();
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = data => {
+    signup(
+      { email: data.email, password: data.password, fullName: data.fullName },
+      {
+        onSuccess: () => {
+          toast.success('Account registered successfully! Welcome.');
+          navigate('/');
+        },
+        onError: err => {
+          toast.error(err.message || 'Registration failed.');
+        },
+      },
+    );
+  };
+
+  return (
+    <div className='bg-canvas-default flex min-h-screen items-center justify-center p-4'>
+      <div className='bg-canvas-panel border-border-subtle w-full max-w-md rounded-2xl border p-8 shadow-md'>
+        <div className='mb-8 text-center'>
+          <div className='bg-brand-primary mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl text-2xl font-bold text-white'>
+            S
+          </div>
+          <h1 className='text-brand-dark mb-2 text-2xl font-bold'>
+            Create an account
+          </h1>
+          <p className='text-brand-muted'>
+            Start your career journey with SkillBridge.
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
+          <div>
+            <label className='text-brand-dark mb-1.5 block text-sm font-medium'>
+              Full Name
+            </label>
+            <input
+              type='text'
+              {...register('fullName', { required: 'Full name is required' })}
+              className={`bg-canvas-inset border-border-subtle text-brand-dark w-full rounded-lg border px-4 py-2.5 transition-colors focus:outline-none ${errors.fullName ? 'border-feedback-danger focus:border-feedback-danger' : 'focus:border-border-focus'}`}
+              placeholder='E.g., Simbiat Lawal'
+            />
+            {errors.fullName && (
+              <p className='text-feedback-danger mt-1 text-xs'>
+                {errors.fullName.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className='text-brand-dark mb-1.5 block text-sm font-medium'>
+              Email
+            </label>
+            <input
+              type='email'
+              {...register('email', {
+                required: 'Email is required',
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: 'Invalid email address',
+                },
+              })}
+              className={`bg-canvas-inset border-border-subtle text-brand-dark w-full rounded-lg border px-4 py-2.5 transition-colors focus:outline-none ${errors.email ? 'border-feedback-danger focus:border-feedback-danger' : 'focus:border-border-focus'}`}
+              placeholder='E.g., simbiat@university.edu'
+            />
+            {errors.email && (
+              <p className='text-feedback-danger mt-1 text-xs'>
+                {errors.email.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className='text-brand-dark mb-1.5 block text-sm font-medium'>
+              Password
+            </label>
+            <input
+              type='password'
+              {...register('password', {
+                required: 'Password is required',
+                minLength: {
+                  value: 8,
+                  message: 'Password must be at least 8 characters',
+                },
+              })}
+              className={`bg-canvas-inset border-border-subtle text-brand-dark w-full rounded-lg border px-4 py-2.5 transition-colors focus:outline-none ${errors.password ? 'border-feedback-danger focus:border-feedback-danger' : 'focus:border-border-focus'}`}
+              placeholder='Create a strong password'
+            />
+            {errors.password && (
+              <p className='text-feedback-danger mt-1 text-xs'>
+                {errors.password.message}
+              </p>
+            )}
+          </div>
+
+          <div>
+            <label className='text-brand-dark mb-1.5 block text-sm font-medium'>
+              Confirm Password
+            </label>
+            <input
+              type='password'
+              {...register('passwordConfirm', {
+                required: 'Please confirm password',
+                validate: value =>
+                  value === getValues().password || 'Passwords need to match',
+              })}
+              className={`bg-canvas-inset border-border-subtle text-brand-dark w-full rounded-lg border px-4 py-2.5 transition-colors focus:outline-none ${errors.password ? 'border-feedback-danger focus:border-feedback-danger' : 'focus:border-border-focus'}`}
+              placeholder='Repeat password'
+            />
+            {errors.passwordConfirm && (
+              <p className='text-feedback-danger mt-1 text-xs'>
+                {errors.passwordConfirm.message}
+              </p>
+            )}
+          </div>
+
+          <button
+            type='submit'
+            disabled={isSigningUp}
+            className='bg-brand-primary hover:bg-brand-primary/90 w-full rounded-lg px-4 py-2.5 font-medium text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50'
+          >
+            {isSigningUp ? 'Creating Account...' : 'Create Account'}
+          </button>
+        </form>
+
+        <p className='text-brand-muted mt-8 text-center text-sm'>
+          Already have an account?{' '}
+          <Link
+            to='/login'
+            className='text-brand-primary font-medium hover:underline'
+          >
+            Log in
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}
+```
+
+## `src/features/career-recommendation/hooks/useRecommendations.ts`
+
+```ts
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { supabase } from '../../../services/supabase';
+import {
+  generateAiCareerRecommendations,
+  generateAiTimelineRoadmap,
+} from '../../../services/apiRecommendations';
+
+/**
+ * 1. Hook to grab the user's latest assessment and its generated career options
+ */
+export function useCareerRecommendations(userId) {
+  return useQuery({
+    queryKey: ['latestAssessment', userId],
+    queryFn: async () => {
+      if (!userId) return null;
+
+      // Pull latest assessment row
+      const { data, error } = await supabase
+        .from('assessments')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+      if (error) throw new Error(error.message);
+      const assessment = data[0] || null;
+      if (!assessment) return null;
+
+      // If recommendations have already been generated and saved, return them immediately!
+      if (assessment.generated_recommendations) {
+        return {
+          assessment,
+          recommendations: assessment.generated_recommendations,
+        };
+      }
+
+      // If not, fetch them fresh from Gemini
+      const recommendations = await generateAiCareerRecommendations(assessment);
+
+      // Save them to the database instantly in the background so it never repeats
+      await supabase
+        .from('assessments')
+        .update({ generated_recommendations: recommendations })
+        .eq('id', assessment.id);
+
+      return { assessment, recommendations };
+    },
+    enabled: Boolean(userId),
+    staleTime: 1000 * 60 * 30, // 30 Minute local cache lock
+  });
+}
+
+/**
+ * 2. Hook to fetch or build a personalized learning roadmap from the database
+ */
+export function useTimelineRoadmap(userId, targetCareer) {
+  return useQuery({
+    queryKey: ['activeRoadmap', userId, targetCareer],
+    queryFn: async () => {
+      if (!userId || !targetCareer) return null;
+
+      // A. Check if this specific roadmap row already exists in Supabase
+      const { data: existingRoadmap } = await supabase
+        .from('roadmaps')
+        .select('*')
+        .eq('user_id', userId)
+        .eq('target_career_title', targetCareer)
+        .limit(1);
+
+      if (existingRoadmap && existingRoadmap.length > 0) {
+        return existingRoadmap[0];
+      }
+
+      // B. If it doesn't exist, fetch the parent assessment details to find gaps
+      const { data: assessmentData } = await supabase
+        .from('assessments')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+      const latestAssessment = assessmentData?.[0];
+      const identifiedGaps = latestAssessment?.selected_skills || [
+        'General Core Skills',
+      ];
+
+      // C. Trigger Gemini to construct the 6-month milestones
+      const generatedMilestones = await generateAiTimelineRoadmap({
+        targetCareer,
+        identifiedGaps,
+      });
+
+      // D. Save it directly to the database row so it persists permanently
+      const { data: newRoadmap, error: saveError } = await supabase
+        .from('roadmaps')
+        .insert([
+          {
+            user_id: userId,
+            assessment_id:
+              latestAssessment?.id || '00000000-0000-0000-0000-000000000000',
+            target_career_title: targetCareer,
+            suitability_percentage: 85,
+            verified_strengths: latestAssessment?.selected_skills || [],
+            identified_gaps: [],
+            timeline_milestones_json: generatedMilestones,
+          },
+        ])
+        .select()
+        .single();
+
+      if (saveError) throw new Error(saveError.message);
+      return newRoadmap;
+    },
+    enabled: Boolean(userId) && Boolean(targetCareer),
+    staleTime: 1000 * 60 * 60, // 1 hour data stability cache
+  });
+}
+
+/**
+ * 3. Mutation hook to update completion checkboxes in real time
+ */
+export function useUpdateRoadmapProgress() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async ({ roadmapId, updatedMilestones }) => {
+      const { data, error } = await supabase
+        .from('roadmaps')
+        .update({ timeline_milestones_json: updatedMilestones })
+        .eq('id', roadmapId)
+        .select()
+        .single();
+
+      if (error) throw new Error(error.message);
+      return data;
+    },
+    onSuccess: data => {
+      // Invalidate the cache line to reflect updates everywhere instantly
+      queryClient.invalidateQueries({
+        queryKey: ['activeRoadmap', data.user_id, data.target_career_title],
+      });
+    },
+  });
+}
+```
+
+## `src/features/career-recommendation/pages/RecommendationsPage.tsx`
+
+```tsx
+import {
+  CheckCircle2Icon,
+  AlertTriangleIcon,
+  ArrowRightIcon,
+} from 'lucide-react';
+import { Link, useNavigate } from 'react-router';
+import { useCareerRecommendations } from '../hooks/useRecommendations';
+import { useUser } from '../../authentication/hooks/useUser';
+import Spinner from '../../../components/Spinner';
+
+export default function RecommendationsPage() {
+  const navigate = useNavigate();
+  const { user, profile } = useUser();
+
+  // Fetch from our new smart background-saving hook
+  const { data, isLoading, error } = useCareerRecommendations(user?.id);
+
+  if (isLoading) {
+    return (
+      <div className='bg-canvas-default flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center font-sans'>
+        <Spinner />
+        <p className='text-brand-muted mt-2 animate-pulse text-sm'>
+          SkillBridge AI parsing your profiles and matching career tracks...
+        </p>
+      </div>
+    );
+  }
+
+  if (
+    error ||
+    !data ||
+    !data.recommendations ||
+    data.recommendations.length === 0
+  ) {
+    return (
+      <div className='bg-canvas-default flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center p-4 text-center font-sans'>
+        <h2 className='text-brand-dark text-xl font-bold'>
+          No Active Career Blueprints Found
+        </h2>
+        <p className='text-brand-muted mt-1 max-w-md text-sm'>
+          Complete an evaluation assessment first to generate your technical
+          profile data.
+        </p>
+        <button
+          onClick={() => navigate('/skill-selector')}
+          className='bg-brand-primary hover:bg-brand-primary/90 mt-6 cursor-pointer rounded-lg px-5 py-2.5 font-medium text-white transition-colors'
+        >
+          Take Assessment Quiz
+        </button>
+      </div>
+    );
+  }
+
+  const { assessment, recommendations } = data;
+  const studentName = profile?.full_name
+    ? profile.full_name.split(' ')[0]
+    : 'Scholar';
+
+  return (
+    <div className='bg-canvas-default mx-auto max-w-7xl space-y-8 p-4 font-sans md:p-8'>
+      <div className='bg-canvas-panel border-border-subtle rounded-2xl border p-6 shadow-sm md:p-8'>
+        <h1 className='text-brand-dark mb-2 text-2xl font-bold'>
+          Assessment Results for {studentName}
+        </h1>
+        <p className='text-brand-muted max-w-3xl text-sm leading-relaxed'>
+          Based on your recent quiz evaluation session where you scored a
+          verified{' '}
+          <span className='text-brand-primary font-bold'>
+            {assessment?.verified_match_score}% accuracy
+          </span>{' '}
+          across your skills matrix, your tailored pathways are ready.
+        </p>
+      </div>
+
+      <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
+        {recommendations.map(rec => (
+          <div
+            key={rec.id}
+            className='bg-canvas-panel border-border-subtle hover:border-brand-primary/40 flex h-full flex-col rounded-2xl border p-6 shadow-sm transition-all duration-200'
+          >
+            <div className='mb-4 flex items-start justify-between gap-2'>
+              <h2 className='text-brand-dark text-lg leading-tight font-bold tracking-tight'>
+                {rec.title}
+              </h2>
+              <div
+                className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold ${rec.match_percentage >= 80 ? 'bg-feedback-success/10 text-feedback-success' : 'bg-brand-primary/10 text-brand-primary'}`}
+              >
+                {rec.match_percentage}% Match
+              </div>
+            </div>
+
+            <p className='text-brand-muted mb-6 flex-1 text-xs leading-relaxed'>
+              {rec.description}
+            </p>
+
+            <div className='mb-8 space-y-5'>
+              <div>
+                <h3 className='text-brand-secondary mb-3 text-xs font-bold tracking-wider uppercase'>
+                  Verified Strengths
+                </h3>
+                <ul className='space-y-2'>
+                  {rec.strengths.map((str, i) => (
+                    <li
+                      key={i}
+                      className='text-brand-dark flex items-start gap-2 text-xs'
+                    >
+                      <CheckCircle2Icon
+                        size={14}
+                        className='text-feedback-success mt-0.5 shrink-0'
+                      />
+                      {str}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className='text-brand-secondary mb-3 text-xs font-bold tracking-wider uppercase'>
+                  Identified Gaps
+                </h3>
+                <ul className='space-y-2'>
+                  {rec.gaps.map((gap, i) => (
+                    <li
+                      key={i}
+                      className='text-brand-dark flex items-start gap-2 text-xs'
+                    >
+                      <AlertTriangleIcon
+                        size={14}
+                        className='text-feedback-warning mt-0.5 shrink-0'
+                      />
+                      {gap}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* We now pass the title via modern URL search parameters for pure navigation stability! */}
+            <Link
+              to={`/roadmap?job=${encodeURIComponent(rec.title)}`}
+              className='bg-canvas-inset border-border-subtle text-brand-dark hover:bg-canvas-default hover:border-brand-primary/50 mt-auto inline-flex w-full items-center justify-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors'
+            >
+              View Personalized Roadmap <ArrowRightIcon size={14} />
+            </Link>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+```
+
+## `src/features/career-recommendation/pages/RoadmapView.tsx`
+
+```tsx
+import { useLocation, useNavigate } from 'react-router';
+import { ExternalLinkIcon, CheckIcon, ArrowLeftIcon } from 'lucide-react';
+import toast from 'react-hot-toast';
+
+import {
+  useTimelineRoadmap,
+  useUpdateRoadmapProgress,
+} from '../hooks/useRecommendations';
+import Spinner from '../../../components/Spinner';
+import { useUser } from '../../authentication/hooks/useUser';
+
+export default function RoadmapView() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useUser();
+
+  // Extract the target job name directly out of the browser's native URL search bar
+  const searchParams = new URLSearchParams(location.search);
+  const chosenJob = searchParams.get('job');
+
+  // Trigger our unified database-first hook
+  const {
+    data: roadmapInstance,
+    isLoading,
+    error,
+  } = useTimelineRoadmap(user?.id, chosenJob);
+  const { mutate: syncProgress } = useUpdateRoadmapProgress();
+
+  if (isLoading) {
+    return (
+      <div className='bg-canvas-default flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center font-sans'>
+        <Spinner />
+        <p className='text-brand-muted mt-2 animate-pulse text-sm'>
+          SkillBridge AI sync loading your persistent roadmap tracking
+          profile...
+        </p>
+      </div>
+    );
+  }
+
+  if (error || !roadmapInstance) {
+    return (
+      <div className='bg-canvas-default flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center p-4 text-center font-sans'>
+        <p className='text-feedback-danger font-medium'>
+          Failed to load the active timeline profile row parameters.
+        </p>
+        <button
+          onClick={() => navigate('/recommendations')}
+          className='text-brand-primary mt-4 text-sm font-semibold hover:underline'
+        >
+          Go Back to Recommendations
+        </button>
+      </div>
+    );
+  }
+
+  // Read the milestones array directly out of our PostgreSQL JSONB cell
+  const milestones = roadmapInstance.timeline_milestones_json || [];
+
+  const toggleStepComplete = id => {
+    const updatedMilestones = milestones.map(step => {
+      if (step.id === id) {
+        return { ...step, completed: !step.completed };
+      }
+      return step;
+    });
+
+    // Fire mutation patch directly to database row
+    syncProgress(
+      {
+        roadmapId: roadmapInstance.id,
+        updatedMilestones,
+      },
+      {
+        onSuccess: () => {
+          toast.success('Progress saved online!');
+        },
+        onError: err => {
+          toast.error('Sync failed: ' + err.message);
+        },
+      },
+    );
+  };
+
+  return (
+    <div className='bg-canvas-default mx-auto min-h-[calc(100vh-4rem)] max-w-5xl p-4 font-sans md:p-8'>
+      <div className='mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center'>
+        <div>
+          <h1 className='text-brand-dark text-2xl font-bold'>
+            Learning Roadmap
+          </h1>
+          <p className='text-brand-muted mt-1 text-sm'>
+            Persistent curriculum tracker for your role as a{' '}
+            <span className='text-brand-primary font-bold'>{chosenJob}</span>.
+          </p>
+        </div>
+        <button
+          onClick={() => navigate('/recommendations')}
+          className='text-brand-muted hover:text-brand-dark border-border-subtle bg-canvas-panel inline-flex cursor-pointer items-center gap-2 rounded-lg border px-4 py-2 text-sm shadow-sm transition-colors'
+        >
+          <ArrowLeftIcon size={16} /> Back to Results
+        </button>
+      </div>
+
+      <div className='bg-canvas-panel border-border-subtle relative rounded-2xl border p-6 shadow-sm md:p-10'>
+        <div className='bg-border-subtle absolute top-12 bottom-12 left-10.75 z-0 w-0.5' />
+
+        <div className='relative z-10 space-y-12'>
+          {milestones.map(step => {
+            const isStepDone = step.completed;
+            return (
+              <div key={step.id} className='relative flex items-start gap-6'>
+                <div className='mt-1 shrink-0'>
+                  <div
+                    onClick={() => toggleStepComplete(step.id)}
+                    className={`flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-2 transition-all duration-200 ${
+                      isStepDone
+                        ? 'bg-feedback-success border-feedback-success text-white shadow-sm'
+                        : 'bg-canvas-inset border-border-subtle hover:border-brand-primary text-transparent'
+                    }`}
+                  >
+                    <CheckIcon
+                      size={18}
+                      className={isStepDone ? 'block' : 'hidden'}
+                    />
+                  </div>
+                </div>
+
+                <div
+                  className={`bg-canvas-panel flex-1 rounded-xl border p-5 transition-all duration-200 ${isStepDone ? 'border-feedback-success/40 bg-feedback-success/5' : 'border-border-subtle'}`}
+                >
+                  <div className='mb-4 flex flex-col justify-between gap-4 md:flex-row md:items-center'>
+                    <div>
+                      <span className='text-brand-secondary mb-1 block text-xs font-bold tracking-wider uppercase'>
+                        {step.month}
+                      </span>
+                      <h3
+                        className={`text-brand-dark text-base font-bold ${isStepDone ? 'text-brand-muted line-through' : ''}`}
+                      >
+                        {step.title}
+                      </h3>
+                    </div>
+
+                    <label className='group flex shrink-0 cursor-pointer items-center gap-2 select-none'>
+                      <input
+                        type='checkbox'
+                        checked={isStepDone}
+                        onChange={() => toggleStepComplete(step.id)}
+                        className='hidden'
+                      />
+                      <div
+                        className={`flex h-5 w-5 items-center justify-center rounded border transition-colors ${isStepDone ? 'bg-brand-primary border-brand-primary text-white' : 'border-border-subtle bg-canvas-inset group-hover:border-brand-primary'}`}
+                      >
+                        {isStepDone && <CheckIcon size={14} />}
+                      </div>
+                      <span className='text-brand-muted group-hover:text-brand-dark text-xs font-semibold'>
+                        Mark month complete
+                      </span>
+                    </label>
+                  </div>
+
+                  <div className='border-border-subtle/50 mt-4 flex flex-wrap gap-y-2 border-t pt-4'>
+                    {step.links.map((link, i) => (
+                      <a
+                        key={i}
+                        href={link.url}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className='text-brand-primary mr-6 inline-flex items-center gap-1.5 text-xs font-semibold hover:underline'
+                      >
+                        {link.text} <ExternalLinkIcon size={12} />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+## `src/features/cv-processing/pages/CvUploadPage.tsx`
+
+```tsx
+import { useState, useRef } from 'react';
+import {
+  UploadCloudIcon,
+  FileIcon,
+  CheckCircle2Icon,
+  XIcon,
+  PlusIcon,
+} from 'lucide-react';
+import { useNavigate } from 'react-router';
+import toast from 'react-hot-toast';
+
+import { parsePdfText, extractCvMetricsWithAi } from '../services/cvService';
+import { useSubmitAssessment } from '../../skill-assessment/hooks/useAssessment';
+import { useUser } from '../../authentication/hooks/useUser';
+
+export default function CvUploadPage() {
+  const navigate = useNavigate();
+  const fileInputRef = useRef(null);
+  const { user, profile } = useUser();
+  const { mutate: submitAssessment, isPending: isSavingProfile } =
+    useSubmitAssessment();
+
+  const [uploadState, setUploadState] = useState('idle'); // idle, uploading, parsed
+  const [fileName, setFileName] = useState('');
+
+  // Real extracted metrics data state
+  const [extractedData, setExtractedData] = useState({
+    education: '',
+    experience: '',
+    skills: [],
+  });
+
+  const [newSkillInput, setNewSkillInput] = useState('');
+  const [isAddingSkill, setIsAddingSkill] = useState(false);
+
+  const processFile = async file => {
+    if (!file || file.type !== 'application/pdf') {
+      toast.error('SkillBridge strictly supports standard PDF uploads.');
+      return;
+    }
+
+    try {
+      setFileName(file.name);
+      setUploadState('uploading');
+
+      // A. Extract plain text from PDF pages locally
+      const extractedRawText = await parsePdfText(file);
+
+      if (!extractedRawText.trim()) {
+        throw new Error(
+          'Could not extract legible string elements out of the PDF layout configuration.',
+        );
+      }
+
+      // B. Dispatch payload to Gemini ATS parsing service
+      const aiParsedResult = await extractCvMetricsWithAi(extractedRawText);
+
+      setExtractedData({
+        education: aiParsedResult.education || 'Not Specified',
+        experience: aiParsedResult.experience || 'Not Specified',
+        skills: aiParsedResult.skills || [],
+      });
+
+      setUploadState('parsed');
+      toast.success('CV contents compiled successfully!');
+    } catch (error) {
+      console.error(error);
+      toast.error(
+        error.message || 'Failed to analyze uploaded document matrix.',
+      );
+      setUploadState('idle');
+    }
+  };
+
+  const handleDrop = e => {
+    e.preventDefault();
+    const file = e.dataTransfer?.files[0];
+    processFile(file);
+  };
+
+  const handleFileChange = e => {
+    const file = e.target.files?.[0];
+    processFile(file);
+  };
+
+  const removeSkillTag = targetSkill => {
+    setExtractedData(prev => ({
+      ...prev,
+      skills: prev.skills.filter(s => s !== targetSkill),
+    }));
+  };
+
+  const handleAddSkillSubmit = e => {
+    e.preventDefault();
+    const cleanSkill = newSkillInput.trim();
+    if (cleanSkill && !extractedData.skills.includes(cleanSkill)) {
+      setExtractedData(prev => ({
+        ...prev,
+        skills: [...prev.skills, cleanSkill],
+      }));
+      setNewSkillInput('');
+      setIsAddingSkill(false);
+    }
+  };
+
+  const handleConfirmAndSave = () => {
+    if (extractedData.skills.length === 0) {
+      toast.error(
+        'Profile must include at least one mapped skill tag before confirmation.',
+      );
+      return;
+    }
+
+    // Save profile metrics directly into our assessments table row logs
+    submitAssessment(
+      {
+        userId: user.id,
+        discipline: 'Automated CV Parsing Profile',
+        selectedSkills: extractedData.skills,
+        verifiedScore: 100, // Fixed baseline completion value indicator
+        rawPayload: {
+          education: extractedData.education,
+          experience: extractedData.experience,
+        },
+      },
+      {
+        onSuccess: () => {
+          toast.success('Professional data synchronized with your profile!');
+          // Seamlessly pass parameters to recommendations search params
+          navigate('/recommendations');
+        },
+        onError: err => {
+          toast.error(
+            'Failed to update profile configurations: ' + err.message,
+          );
+        },
+      },
+    );
+  };
+
+  const studentInitials = profile?.full_name
+    ? profile.full_name
+        .split(' ')
+        .map(n => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2)
+    : 'ST';
+
+  return (
+    <div className='bg-canvas-default mx-auto min-h-[calc(100vh-4rem)] max-w-5xl space-y-6 p-4 font-sans md:p-8'>
+      <div>
+        <h1 className='text-brand-dark text-2xl font-bold'>
+          Automated CV Upload
+        </h1>
+        <p className='text-brand-muted mt-1 text-sm'>
+          Upload your resume to automatically extract your structural skills and
+          experience.
+        </p>
+      </div>
+
+      {/* Input tag reference gate */}
+      <input
+        type='file'
+        ref={fileInputRef}
+        onChange={handleFileChange}
+        accept='application/pdf'
+        className='hidden'
+      />
+
+      {uploadState === 'idle' && (
+        <div
+          onDragOver={e => e.preventDefault()}
+          onDrop={handleDrop}
+          onClick={() => fileInputRef.current?.click()}
+          className='border-border-subtle bg-canvas-panel hover:border-brand-primary hover:bg-canvas-inset/30 group cursor-pointer rounded-2xl border-2 border-dashed p-12 text-center shadow-sm transition-all'
+        >
+          <div className='bg-canvas-inset text-brand-muted group-hover:text-brand-primary group-hover:bg-brand-primary/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full transition-colors'>
+            <UploadCloudIcon size={32} />
+          </div>
+          <h3 className='text-brand-dark mb-2 text-base font-bold'>
+            Drag your CV here or click to browse
+          </h3>
+          <p className='text-brand-muted text-xs'>
+            Supports PDF formatting metrics only (Max 5MB)
+          </p>
+        </div>
+      )}
+
+      {uploadState === 'uploading' && (
+        <div className='bg-canvas-panel border-border-subtle flex flex-col items-center justify-center rounded-2xl border p-12 text-center shadow-sm'>
+          <div className='w-full max-w-md space-y-4'>
+            <div className='flex items-center justify-between text-sm font-semibold'>
+              <span className='text-brand-dark flex items-center gap-2 truncate'>
+                <FileIcon size={16} className='text-brand-primary shrink-0' />
+                {fileName}
+              </span>
+              <span className='text-brand-primary animate-pulse'>
+                Analyzing File...
+              </span>
+            </div>
+            <div className='bg-canvas-inset relative h-2 w-full overflow-hidden rounded-full'>
+              <div
+                className='bg-brand-primary animate-infinite-loading h-full w-1/3 rounded-full'
+                style={{ animation: 'loading-bar 1.5s infinite ease-in-out' }}
+              />
+            </div>
+            <p className='text-brand-muted animate-pulse text-xs'>
+              SkillBridge parsing binary buffers and aligning skill profiles...
+            </p>
+          </div>
+        </div>
+      )}
+
+      {uploadState === 'parsed' && (
+        <div className='grid grid-cols-1 items-start gap-6 lg:grid-cols-2'>
+          {/* Data Inputs Editing Block */}
+          <div className='bg-canvas-panel border-border-subtle space-y-6 rounded-2xl border p-6 shadow-sm'>
+            <div className='border-border-subtle flex items-center justify-between border-b pb-4'>
+              <h2 className='text-brand-dark text-base font-bold'>
+                Extracted Profile Fields
+              </h2>
+              <button
+                onClick={() => setUploadState('idle')}
+                className='text-brand-muted hover:text-feedback-danger flex cursor-pointer items-center gap-1 text-xs font-semibold transition-colors'
+              >
+                <XIcon size={14} /> Re-upload
+              </button>
+            </div>
+
+            <div className='space-y-5'>
+              <div>
+                <label className='text-brand-secondary mb-1.5 block text-xs font-bold tracking-wider uppercase'>
+                  Education Mapping
+                </label>
+                <input
+                  type='text'
+                  value={extractedData.education}
+                  onChange={e =>
+                    setExtractedData(prev => ({
+                      ...prev,
+                      education: e.target.value,
+                    }))
+                  }
+                  className='bg-canvas-inset border-border-subtle text-brand-dark focus:border-border-focus w-full rounded-lg border px-4 py-2.5 text-sm transition-colors focus:outline-none'
+                />
+              </div>
+
+              <div>
+                <label className='text-brand-secondary mb-1.5 block text-xs font-bold tracking-wider uppercase'>
+                  Historical Experience Log
+                </label>
+                <textarea
+                  rows={4}
+                  value={extractedData.experience}
+                  onChange={e =>
+                    setExtractedData(prev => ({
+                      ...prev,
+                      experience: e.target.value,
+                    }))
+                  }
+                  className='bg-canvas-inset border-border-subtle text-brand-dark focus:border-border-focus w-full resize-none rounded-lg border px-4 py-2.5 text-sm transition-colors focus:outline-none'
+                />
+              </div>
+
+              <div>
+                <label className='text-brand-secondary mb-2 block text-xs font-bold tracking-wider uppercase'>
+                  Mapped Skills Tags Matrix
+                </label>
+                <div className='flex flex-wrap gap-2'>
+                  {extractedData.skills.map(skill => (
+                    <span
+                      key={skill}
+                      className='bg-canvas-inset border-border-subtle text-brand-dark inline-flex items-center gap-1 rounded-full border py-1 pr-1.5 pl-3 text-xs font-semibold shadow-sm'
+                    >
+                      {skill}
+                      <button
+                        onClick={() => removeSkillTag(skill)}
+                        className='text-brand-muted hover:text-feedback-danger hover:bg-canvas-panel ml-1 cursor-pointer rounded-full p-0.5 transition-colors'
+                      >
+                        <XIcon size={12} />
+                      </button>
+                    </span>
+                  ))}
+
+                  {isAddingSkill ? (
+                    <form
+                      onSubmit={handleAddSkillSubmit}
+                      className='inline-flex items-center gap-1'
+                    >
+                      <input
+                        type='text'
+                        autoFocus
+                        value={newSkillInput}
+                        onChange={e => setNewSkillInput(e.target.value)}
+                        onBlur={() =>
+                          setTimeout(() => setIsAddingSkill(false), 200)
+                        }
+                        className='bg-canvas-inset border-brand-primary text-brand-dark w-24 rounded-full border px-3 py-1 text-xs outline-none'
+                        placeholder='Skill Name'
+                      />
+                    </form>
+                  ) : (
+                    <button
+                      onClick={() => setIsAddingSkill(true)}
+                      className='border-border-subtle text-brand-muted hover:text-brand-primary hover:border-brand-primary bg-canvas-panel inline-flex cursor-pointer items-center gap-1 rounded-full border border-dashed px-3 py-1 text-xs font-bold transition-colors'
+                    >
+                      <PlusIcon size={12} /> Add Tag
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Profile Summary Preview Column */}
+          <div className='bg-canvas-panel border-border-subtle sticky top-20 flex flex-col rounded-2xl border p-6 shadow-sm'>
+            <h2 className='text-brand-dark mb-4 text-base font-bold'>
+              Verified Summary Preview
+            </h2>
+
+            <div className='bg-canvas-inset border-border-subtle flex-1 space-y-4 rounded-xl border p-6'>
+              <div className='mb-2 flex items-center gap-3'>
+                <div className='bg-brand-secondary border-canvas-panel flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold text-white shadow-sm'>
+                  {studentInitials}
+                </div>
+                <div className='truncate'>
+                  <h4 className='text-brand-dark truncate text-sm font-bold'>
+                    {profile?.full_name || 'Loading Profile...'}
+                  </h4>
+                  <p className='text-brand-muted truncate text-xs'>
+                    {extractedData.education || 'Parsing Academic Records...'}
+                  </p>
+                </div>
+              </div>
+
+              <div className='space-y-3 text-xs font-semibold'>
+                <div className='text-brand-dark flex items-start gap-2'>
+                  <CheckCircle2Icon
+                    size={16}
+                    className='text-feedback-success mt-0.5 shrink-0'
+                  />
+                  <span>Academic profiles parsed cleanly.</span>
+                </div>
+                <div className='text-brand-dark flex items-start gap-2'>
+                  <CheckCircle2Icon
+                    size={16}
+                    className='text-feedback-success mt-0.5 shrink-0'
+                  />
+                  <span>Professional experiences cataloged.</span>
+                </div>
+                <div className='text-brand-dark flex items-start gap-2'>
+                  <CheckCircle2Icon
+                    size={16}
+                    className='text-feedback-success mt-0.5 shrink-0'
+                  />
+                  <span>
+                    {extractedData.skills.length} technical skills mapped to
+                    dashboard.
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div className='border-border-subtle mt-6 border-t pt-4'>
+              <button
+                onClick={handleConfirmAndSave}
+                disabled={isSavingProfile}
+                className='bg-brand-primary hover:bg-brand-primary/90 w-full cursor-pointer rounded-lg px-4 py-3 text-sm font-medium text-white shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-50'
+              >
+                {isSavingProfile
+                  ? 'Synchronizing Profile...'
+                  : 'Confirm & Save Profile'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## `src/features/cv-processing/services/cvService.ts`
+
+```ts
+import { genAI } from '../../../services/gemini';
+
+// Official un-bundled stable minified worker build path matching version 4.x
+const PDF_WORKER_SRC =
+  'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.worker.min.mjs';
+
+/**
+ * 1. Extracts plain raw text contents out of a local binary PDF file blob
+ */
+export async function parsePdfText(file) {
+  // Import the primary module script dynamically from CDN
+  const pdfjs =
+    await import('https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.3.136/pdf.min.mjs');
+  pdfjs.GlobalWorkerOptions.workerSrc = PDF_WORKER_SRC;
+
+  const arrayBuffer = await file.arrayBuffer();
+  const loadingTask = pdfjs.getDocument({ data: arrayBuffer });
+  const pdf = await loadingTask.promise;
+
+  let fullText = '';
+
+  // Iterate through every page inside the document layout grid
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const textContent = await page.getTextContent();
+    const pageItems = textContent.items.map(item => item.str).join(' ');
+    fullText += pageItems + '\n';
+  }
+
+  return fullText;
+}
+
+/**
+ * 2. Transmits unstructured text to Gemini to parse out real data matching our layout
+ */
+export async function extractCvMetricsWithAi(rawCvText) {
+  const prompt = `
+    You are an expert AI human resources assistant and ATS resume data parsing engine.
+    Analyze the following raw text extracted from an applicant's CV document:
+
+    ---
+    ${rawCvText}
+    ---
+
+    Extract the primary educational qualification history, overall professional experiences, and a flat array list mapping out all technical/domain skills.
+
+    Return ONLY a raw JSON object matching this exact schema layout without markdown code fence blocks:
+    {
+      "education": "Most prominent degree title and associated institution name",
+      "experience": "Concise paragraph or list summarizing historical professional roles or internship involvements",
+      "skills": ["SkillA", "SkillB", "SkillC", "SkillD"]
+    }
+  `;
+
+  const response = await genAI.models.generateContent({
+    model: 'gemini-3.5-flash',
+    contents: prompt,
+  });
+
+  const cleanText = response.text.replace(/^```json\s+|\s+```$/g, '').trim();
+  return JSON.parse(cleanText);
+}
+```
+
+## `src/features/dashboard/hooks/useDashboardData.ts`
+
+```ts
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { deleteAssessmentRecord } from '../../../services/apiRecommendations';
+import { supabase } from '../../../services/supabase';
+import toast from 'react-hot-toast';
+
+/**
+ * Custom hook to aggregate historic logs for the main workspace landing page
+ */
+export function useDashboardData(userId) {
+  return useQuery({
+    queryKey: ['dashboardHistory', userId],
+    queryFn: async () => {
+      if (!userId) return { history: [], roadmaps: [] };
+
+      // 1. Fetch all evaluation records ordered by newest first
+      const { data: history, error: historyError } = await supabase
+        .from('assessments')
+        .select('*')
+        .eq('user_id', userId)
+        .order('created_at', { ascending: false });
+
+      if (historyError) throw new Error(historyError.message);
+
+      // 2. Fetch all persistent roadmaps saved to the profile
+      const { data: roadmaps, error: roadmapError } = await supabase
+        .from('roadmaps')
+        .select('*')
+        .eq('user_id', userId);
+
+      if (roadmapError) throw new Error(roadmapError.message);
+
+      return { history, roadmaps };
+    },
+    enabled: Boolean(userId),
+    staleTime: 1000 * 60 * 2, // 2-minute refresh buffer
+  });
+}
+
+/**
+ * React Query mutation to handle clearing history rows with instant cache updates
+ */
+export function useDeleteAssessment() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteAssessmentRecord,
+    onSuccess: () => {
+      toast.success('Evaluation record permanently removed.');
+      // Invalidate the cache matrix to trigger an automatic background update across the UI
+      queryClient.invalidateQueries({ queryKey: ['dashboardHistory'] });
+      // Also clear active roadmap cache headers since child records cascaded away
+      queryClient.invalidateQueries({ queryKey: ['activeRoadmap'] });
+    },
+    onError: err => {
+      toast.error('Failed to clear row: ' + err.message);
+    },
+  });
+}
+```
+
+## `src/features/dashboard/pages/HomePage.tsx`
+
+```tsx
+import {
+  AlertCircleIcon,
+  FileTextIcon,
+  TargetIcon,
+  ArrowRightIcon,
+  ChevronRightIcon,
+  CheckCircle2Icon,
+  Trash2Icon,
+} from 'lucide-react';
+import { Link } from 'react-router';
+
+import { useUser } from '../../authentication/hooks/useUser';
+import {
+  useDashboardData,
+  useDeleteAssessment,
+} from '../hooks/useDashboardData';
+import Spinner from '../../../components/Spinner';
+
+export default function HomePage() {
+  const { user, profile, isLoading: isLoadingUser } = useUser();
+  const { data, isLoading: isLoadingData } = useDashboardData(user?.id);
+
+  // Initialize our new real-time deletion engine hook
+  const { mutate: deleteAssessment, isPending: isDeleting } =
+    useDeleteAssessment();
+
+  if (isLoadingUser || isLoadingData) {
+    return (
+      <div className='bg-canvas-default flex min-h-[calc(100vh-4rem)] items-center justify-center font-sans'>
+        <Spinner />
+      </div>
+    );
+  }
+
+  const firstName = profile?.full_name
+    ? profile.full_name.split(' ')[0]
+    : 'Scholar';
+  const historyLogs = data?.history || [];
+  const savedRoadmaps = data?.roadmaps || [];
+  const isUnlocked = historyLogs.length > 0;
+
+  const formatDisplayDate = isoString => {
+    const dateObj = new Date(isoString);
+    return dateObj.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    });
+  };
+
+  const handleDeleteClick = id => {
+    if (
+      window.confirm(
+        'Are you absolutely sure you want to delete this evaluation? This action will permanently remove its associated learning roadmap from your profile metrics.',
+      )
+    ) {
+      deleteAssessment(id);
+    }
+  };
+
+  return (
+    <div className='bg-canvas-default mx-auto min-h-[calc(100vh-4rem)] max-w-7xl space-y-6 p-4 font-sans md:p-8'>
+      {/* Banner Card */}
+      <div className='bg-canvas-panel border-border-subtle rounded-2xl border p-6 shadow-sm md:p-8'>
+        <h1 className='text-brand-dark mb-2 text-2xl font-bold md:text-3xl'>
+          Welcome back, {firstName}
+        </h1>
+        <p className='text-brand-muted mb-6 text-sm'>
+          Here is what's happening with your career progression today.
+        </p>
+
+        {isUnlocked ? (
+          <div className='bg-feedback-success/10 border-feedback-success/20 flex items-start gap-3 rounded-lg border p-4 transition-all'>
+            <CheckCircle2Icon
+              className='text-feedback-success mt-0.5 shrink-0'
+              size={20}
+            />
+            <div>
+              <h3 className='text-feedback-success text-sm font-bold'>
+                Career Blueprint Unlocked
+              </h3>
+              <p className='text-feedback-success/80 mt-1 text-sm'>
+                Your technical profile metrics are active! Review your
+                recommended tracks below or visit your tailored timeline.
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className='bg-feedback-warning/10 border-feedback-warning/20 flex items-start gap-3 rounded-lg border p-4 transition-all'>
+            <AlertCircleIcon
+              className='text-feedback-warning mt-0.5 shrink-0'
+              size={20}
+            />
+            <div>
+              <h3 className='text-feedback-warning text-sm font-bold'>
+                Career Blueprint Locked
+              </h3>
+              <p className='text-feedback-warning/80 mt-1 text-sm'>
+                Complete a new skill evaluation or upload your latest CV to
+                unlock your personalized career roadmap.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Grid Cards Area */}
+      <div className='grid grid-cols-1 gap-6 md:grid-cols-2'>
+        <div className='bg-canvas-panel border-border-subtle hover:border-brand-primary/30 flex h-full flex-col rounded-2xl border p-6 shadow-sm transition-colors md:p-8'>
+          <div className='bg-brand-primary/10 text-brand-primary mb-5 flex h-12 w-12 items-center justify-center rounded-xl'>
+            <TargetIcon size={24} />
+          </div>
+          <h2 className='text-brand-dark mb-2 text-lg font-bold'>
+            Interactive Skill Triage
+          </h2>
+          <p className='text-brand-muted mb-8 flex-1 text-xs leading-relaxed'>
+            Manually select your current skills across various disciplines to
+            get an instant assessment of your career readiness.
+          </p>
+          <Link
+            to='/skill-selector'
+            className='bg-brand-primary hover:bg-brand-primary/90 inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium text-white transition-colors'
+          >
+            Start Manual Test <ArrowRightIcon size={16} />
+          </Link>
+        </div>
+
+        <div className='bg-canvas-panel border-border-subtle hover:border-brand-primary/30 flex h-full flex-col rounded-2xl border p-6 shadow-sm transition-colors md:p-8'>
+          <div className='bg-brand-secondary/10 text-brand-secondary mb-5 flex h-12 w-12 items-center justify-center rounded-xl'>
+            <FileTextIcon size={24} />
+          </div>
+          <h2 className='text-brand-dark mb-2 text-lg font-bold'>
+            Automated CV Upload
+          </h2>
+          <p className='text-brand-muted mb-8 flex-1 text-xs leading-relaxed'>
+            Upload your resume and let our engine automatically extract your
+            experiences to build your profile instantly.
+          </p>
+          <Link
+            to='/cv-upload'
+            className='bg-canvas-panel border-border-subtle text-brand-dark hover:border-brand-primary hover:text-brand-primary inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium transition-colors'
+          >
+            Upload Document <ArrowRightIcon size={16} />
+          </Link>
+        </div>
+      </div>
+
+      {/* History Log Table Area */}
+      <div className='bg-canvas-panel border-border-subtle overflow-hidden rounded-2xl border shadow-sm'>
+        <div className='border-border-subtle flex items-center justify-between border-b p-6'>
+          <h2 className='text-brand-dark text-base font-bold'>
+            Evaluation History Logs
+          </h2>
+          <span className='text-brand-muted bg-canvas-inset rounded-full px-2.5 py-1 text-xs font-semibold'>
+            {historyLogs.length} Session{historyLogs.length !== 1 ? 's' : ''}
+          </span>
+        </div>
+
+        {historyLogs.length === 0 ? (
+          <div className='text-brand-muted p-12 text-center text-sm font-medium'>
+            No evaluation records found. Complete a triage scan module above to
+            populate history metrics.
+          </div>
+        ) : (
+          <div className='overflow-x-auto'>
+            <table className='w-full border-collapse text-left'>
+              <thead>
+                <tr className='bg-canvas-inset text-brand-muted text-xxs border-border-subtle border-b font-bold tracking-wider uppercase select-none'>
+                  <th className='px-6 py-4 font-semibold'>Date Evaluated</th>
+                  <th className='px-6 py-4 font-semibold'>Discipline Branch</th>
+                  <th className='px-6 py-4 font-semibold'>
+                    Verified Score Met
+                  </th>
+                  <th className='px-6 py-4 text-right font-semibold'>
+                    Actions Control
+                  </th>
+                </tr>
+              </thead>
+              <tbody className='divide-border-subtle divide-y'>
+                {historyLogs.map(row => {
+                  const correspondingRoadmap = savedRoadmaps.find(
+                    rm =>
+                      rm.assessment_id === row.id ||
+                      rm.assessment_id ===
+                        '00000000-0000-0000-0000-000000000000',
+                  );
+                  const targetJobName =
+                    correspondingRoadmap?.target_career_title ||
+                    row.selected_skills[0] ||
+                    'Engineering';
+
+                  return (
+                    <tr
+                      key={row.id}
+                      className='hover:bg-canvas-inset/40 group transition-colors'
+                    >
+                      <td className='text-brand-dark px-6 py-4 text-xs font-medium whitespace-nowrap'>
+                        {formatDisplayDate(row.created_at)}
+                      </td>
+                      <td className='text-brand-dark max-w-xs truncate px-6 py-4 text-xs font-bold'>
+                        {row.tested_discipline}
+                      </td>
+                      <td className='px-6 py-4 text-xs whitespace-nowrap'>
+                        <span
+                          className={`inline-flex items-center rounded-full px-2.5 py-0.5 font-bold ${row.verified_match_score >= 70 ? 'bg-feedback-success/10 text-feedback-success' : 'bg-feedback-warning/10 text-feedback-warning'}`}
+                        >
+                          {row.verified_match_score}%
+                        </span>
+                      </td>
+                      <td className='flex h-14 items-center justify-end gap-4 px-6 py-4 text-right text-xs whitespace-nowrap'>
+                        <Link
+                          to={
+                            correspondingRoadmap
+                              ? `/roadmap?job=${encodeURIComponent(targetJobName)}`
+                              : '/recommendations'
+                          }
+                          className='text-brand-primary inline-flex items-center gap-1 font-bold hover:underline'
+                        >
+                          {correspondingRoadmap ? 'View Roadmap' : 'Review'}{' '}
+                          <ChevronRightIcon size={14} />
+                        </Link>
+
+                        {/* Elegant delete row icon utility */}
+                        <button
+                          onClick={() => handleDeleteClick(row.id)}
+                          disabled={isDeleting}
+                          className='text-brand-muted hover:text-feedback-danger cursor-pointer rounded-md p-1 opacity-60 transition-colors group-hover:opacity-100 disabled:opacity-30'
+                          title='Delete Assessment Record'
+                        >
+                          <Trash2Icon size={14} />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+```
+
+## `src/features/skill-assessment/hooks/useAssessment.ts`
+
+```ts
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { generateAssessmentQuestions } from '../../../services/gemini';
+import { supabase } from '../../../services/supabase';
+
+/**
+ * React Query hook to fetch and cache Gemini AI generated multi-choice questions
+ */
+export function useAssessmentQuestions(skills) {
+  return useQuery({
+    queryKey: ['assessmentQuestions', skills],
+    queryFn: () => generateAssessmentQuestions(skills),
+    enabled: !!skills && skills.length > 0, // Only execute if skills array has data
+    staleTime: Infinity, // Keep the generated test stable for the duration of the exam session
+    retry: 1,
+  });
+}
+
+/**
+ * Mutation hook to log exam data into public.assessments inside Supabase
+ */
+export function useSubmitAssessment() {
+  return useMutation({
+    mutationFn: async ({
+      userId,
+      discipline,
+      selectedSkills,
+      verifiedScore,
+      rawPayload,
+    }) => {
+      const { data, error } = await supabase
+        .from('assessments')
+        .insert([
+          {
+            user_id: userId,
+            tested_discipline: discipline,
+            selected_skills: selectedSkills,
+            verified_match_score: verifiedScore,
+            raw_performance_payload: rawPayload,
+          },
+        ])
+        .select()
+        .single();
+
+      if (error) throw new Error(error.message);
+      return data;
+    },
+  });
+}
+```
+
+## `src/features/skill-assessment/pages/SkillSelector.tsx`
+
+```tsx
+import { useState } from 'react';
+import { ArrowRightIcon } from 'lucide-react';
+import { useNavigate } from 'react-router';
+
+const categories = [
+  {
+    title: 'Technology',
+    skills: [
+      'React',
+      'Python',
+      'Node.js',
+      'AWS',
+      'Cybersecurity',
+      'Data Analysis',
+      'UI/UX Design',
+      'Machine Learning',
+    ],
+  },
+  {
+    title: 'Engineering',
+    skills: [
+      'Mechanical Design',
+      'AutoCAD',
+      'Circuit Analysis',
+      'Robotics',
+      'Civil Planning',
+      'Thermodynamics',
+    ],
+  },
+  {
+    title: 'Business',
+    skills: [
+      'Financial Modeling',
+      'Project Management',
+      'Marketing Strategy',
+      'Sales',
+      'Agile',
+      'Business Analytics',
+    ],
+  },
+  {
+    title: 'Healthcare',
+    skills: [
+      'Patient Care',
+      'Medical Coding',
+      'Anatomy',
+      'Clinical Research',
+      'Public Health',
+      'Pharmacology',
+    ],
+  },
+];
+
+export default function SkillSelector() {
+  const navigate = useNavigate();
+  const [selectedSkills, setSelectedSkills] = useState([]);
+
+  const toggleSkill = skill => {
+    setSelectedSkills(prev =>
+      prev.includes(skill) ? prev.filter(s => s !== skill) : [...prev, skill],
+    );
+  };
+
+  const handleProceed = () => {
+    if (selectedSkills.length === 0) return;
+    // Pass the selected skills into the router state history buffer safely
+    navigate('/assessment', { state: { skills: selectedSkills } });
+  };
+
+  return (
+    <div className='mx-auto max-w-5xl p-4 pb-32 md:p-8'>
+      <div className='mb-8'>
+        <h1 className='text-brand-dark text-2xl font-bold'>
+          Interactive Skill Triage
+        </h1>
+        <p className='text-brand-muted mt-1'>
+          Select the skills you currently possess to tailor your automated
+          assessment parameters.
+        </p>
+      </div>
+
+      <div className='space-y-10'>
+        {categories.map(category => (
+          <div key={category.title}>
+            <h2 className='text-brand-secondary mb-4 text-sm font-semibold tracking-wide uppercase'>
+              {category.title}
+            </h2>
+            <div className='flex flex-wrap gap-3'>
+              {category.skills.map(skill => {
+                const isSelected = selectedSkills.includes(skill);
+                return (
+                  <button
+                    key={skill}
+                    onClick={() => toggleSkill(skill)}
+                    className={`inline-flex cursor-pointer items-center rounded-full border px-4 py-2 transition-all ${
+                      isSelected
+                        ? 'bg-brand-primary border-brand-primary text-white shadow-sm'
+                        : 'bg-canvas-inset border-border-subtle text-brand-dark hover:border-brand-primary hover:bg-canvas-panel'
+                    }`}
+                  >
+                    {skill}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Sticky Bottom CTA */}
+      <div className='bg-canvas-panel border-border-subtle fixed right-0 bottom-0 left-0 z-20 border-t p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] md:left-64 md:p-6'>
+        <div className='mx-auto flex max-w-5xl items-center justify-between'>
+          <div className='text-brand-muted text-sm'>
+            <span className='text-brand-dark font-bold'>
+              {selectedSkills.length}
+            </span>{' '}
+            skills selected
+          </div>
+          <button
+            onClick={handleProceed}
+            disabled={selectedSkills.length === 0}
+            className={`inline-flex items-center gap-2 rounded-lg px-6 py-3 font-medium transition-colors ${
+              selectedSkills.length > 0
+                ? 'bg-brand-primary hover:bg-brand-primary/90 cursor-pointer text-white'
+                : 'bg-canvas-inset text-brand-muted border-border-subtle cursor-not-allowed border'
+            }`}
+          >
+            Continue to Assessment
+            <ArrowRightIcon size={18} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+## `src/features/skill-assessment/pages/TestingArena.tsx`
+
+```tsx
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { ClockIcon, ArrowRightIcon, ArrowLeftIcon } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router';
+import toast from 'react-hot-toast';
+
+import {
+  useAssessmentQuestions,
+  useSubmitAssessment,
+} from '../hooks/useAssessment';
+import { useUser } from '../../authentication/hooks/useUser';
+import Spinner from '../../../components/Spinner';
+
+export default function TestingArena() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { user } = useUser();
+  const { mutate: submitAssessment, isPending: isSubmitting } =
+    useSubmitAssessment();
+
+  const selectedSkills = useMemo(() => {
+    return location.state?.skills || [];
+  }, [location.state?.skills]);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+  const [timeLeft, setTimeLeft] = useState(0);
+
+  const {
+    data: questions,
+    isLoading,
+    error,
+  } = useAssessmentQuestions(selectedSkills);
+
+  useEffect(() => {
+    if (selectedSkills.length === 0) {
+      toast.error('No selected skills found. Redirecting to Triage.');
+      navigate('/skill-selector', { replace: true });
+    }
+  }, [selectedSkills, navigate]);
+
+  // Automatically configure the countdown clock based on question volume (30s per question)
+  useEffect(() => {
+    if (questions && questions.length > 0) {
+      setTimeLeft(questions.length * 30);
+    }
+  }, [questions]);
+
+  const handleSubmitQuiz = useCallback(() => {
+    let correctCount = 0;
+    const evaluationPayload = questions.map((q, idx) => {
+      const chosenIdx = selectedAnswers[idx];
+      const isCorrect = chosenIdx === q.correct_option_index;
+      if (isCorrect) correctCount++;
+
+      return {
+        questionId: q.id,
+        skill: q.skill,
+        questionText: q.question,
+        userSelection: chosenIdx,
+        correctSelection: q.correct_option_index,
+        status: isCorrect ? 'CORRECT' : 'INCORRECT',
+      };
+    });
+
+    const finalScorePercentage = Math.round(
+      (correctCount / questions.length) * 100,
+    );
+
+    submitAssessment(
+      {
+        userId: user.id,
+        discipline: 'General Technology Evaluation',
+        selectedSkills,
+        verifiedScore: finalScorePercentage,
+        rawPayload: evaluationPayload,
+      },
+      {
+        onSuccess: () => {
+          toast.success('Assessment evaluation submitted successfully!');
+          navigate('/recommendations');
+        },
+        onError: err => {
+          toast.error('Failed to register assessment logs: ' + err.message);
+        },
+      },
+    );
+  }, [
+    navigate,
+    questions,
+    selectedAnswers,
+    submitAssessment,
+    selectedSkills,
+    user.id,
+  ]);
+
+  useEffect(() => {
+    // Only start the countdown if questions have loaded and time is allocated
+    if (!questions || questions.length === 0) return;
+
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          handleSubmitQuiz(); // Automatically submit the exam if the clock hits 00:00
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+    // Include questions and handleSubmitQuiz as dependencies to keep the submission handler fresh
+  }, [questions, handleSubmitQuiz]);
+
+  if (isLoading) {
+    return (
+      <div className='bg-canvas-default flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center font-sans'>
+        <Spinner />
+        <p className='text-brand-muted mt-2 animate-pulse text-sm'>
+          SkillBridge compiling your dynamic interview questions...
+        </p>
+      </div>
+    );
+  }
+
+  if (error || !questions || questions.length === 0) {
+    return (
+      <div className='bg-canvas-default flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center p-4 text-center'>
+        <p className='text-feedback-danger font-medium'>
+          Failed to compile assessment questions from the AI engine.
+        </p>
+        <button
+          onClick={() => navigate('/skill-selector')}
+          className='text-brand-primary mt-4 text-sm font-semibold hover:underline'
+        >
+          Go Back and Retry
+        </button>
+      </div>
+    );
+  }
+
+  const formatTime = seconds => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
+  const handleSelect = optionIndex => {
+    setSelectedAnswers({
+      ...selectedAnswers,
+      [currentIndex]: optionIndex,
+    });
+  };
+
+  const currentQ = questions[currentIndex];
+  const progressPercentage = ((currentIndex + 1) / questions.length) * 100;
+  const hasAnsweredCurrent = selectedAnswers[currentIndex] !== undefined;
+
+  const handleNext = () => {
+    if (currentIndex < questions.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      handleSubmitQuiz();
+    }
+  };
+
+  return (
+    <div className='bg-canvas-default flex min-h-[calc(100vh-4rem)] flex-col font-sans'>
+      {/* Top Progress Dashboard Frame */}
+      <div className='bg-canvas-panel border-border-subtle sticky top-0 z-10 border-b px-4 py-4 md:px-8'>
+        <div className='mx-auto flex max-w-4xl items-center justify-between gap-6'>
+          <div className='flex-1'>
+            <div className='text-brand-muted mb-2 flex justify-between text-xs font-medium'>
+              <span>
+                Question {currentIndex + 1} of {questions.length} (
+                {currentQ.skill})
+              </span>
+              <span>{Math.round(progressPercentage)}%</span>
+            </div>
+            <div className='bg-canvas-inset h-2 w-full overflow-hidden rounded-full'>
+              <div
+                className='bg-brand-primary h-full rounded-full transition-all duration-300 ease-out'
+                style={{ width: `${progressPercentage}%` }}
+              />
+            </div>
+          </div>
+          <div className='bg-canvas-inset border-border-subtle flex items-center gap-2 rounded-lg border px-4 py-2'>
+            <ClockIcon
+              size={18}
+              className={
+                timeLeft < 60
+                  ? 'text-feedback-danger animate-pulse'
+                  : 'text-brand-muted'
+              }
+            />
+            <span
+              className={`font-mono font-bold ${timeLeft < 60 ? 'text-feedback-danger' : 'text-brand-dark'}`}
+            >
+              {formatTime(timeLeft)}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Questionnaire Box */}
+      <div className='flex-1 p-4 md:p-8'>
+        <div className='bg-canvas-panel border-border-subtle mx-auto mt-4 max-w-3xl rounded-2xl border p-6 shadow-md md:mt-8 md:p-10'>
+          <h2 className='text-brand-dark mb-8 text-xl leading-relaxed font-bold md:text-2xl'>
+            {currentQ.question}
+          </h2>
+
+          <div className='space-y-4'>
+            {currentQ.options.map((option, idx) => {
+              const isSelected = selectedAnswers[currentIndex] === idx;
+              return (
+                <div
+                  key={idx}
+                  onClick={() => handleSelect(idx)}
+                  className={`flex cursor-pointer items-start gap-4 rounded-xl border p-4 transition-all md:p-5 ${
+                    isSelected
+                      ? 'border-brand-secondary bg-brand-secondary/5 border-2 shadow-sm'
+                      : 'border-border-subtle hover:border-brand-secondary hover:bg-canvas-inset'
+                  }`}
+                >
+                  <div
+                    className={`mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 ${isSelected ? 'border-brand-secondary' : 'border-border-subtle'}`}
+                  >
+                    {isSelected && (
+                      <div className='bg-brand-secondary h-3 w-3 rounded-full' />
+                    )}
+                  </div>
+                  <span
+                    className={`text-base ${isSelected ? 'text-brand-dark font-medium' : 'text-brand-dark'}`}
+                  >
+                    {option}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Action Navigation Footer */}
+          <div className='border-border-subtle mt-10 flex items-center justify-between border-t pt-6'>
+            <button
+              onClick={() => setCurrentIndex(Math.max(0, currentIndex - 1))}
+              disabled={currentIndex === 0}
+              className={`inline-flex items-center gap-2 rounded-lg px-5 py-2.5 font-medium transition-colors ${
+                currentIndex === 0
+                  ? 'text-brand-muted cursor-not-allowed opacity-50'
+                  : 'text-brand-dark hover:bg-canvas-inset cursor-pointer border border-transparent'
+              }`}
+            >
+              <ArrowLeftIcon size={18} /> Previous
+            </button>
+
+            <button
+              onClick={handleNext}
+              disabled={!hasAnsweredCurrent || isSubmitting}
+              className={`inline-flex items-center gap-2 rounded-lg px-6 py-2.5 font-medium transition-colors ${
+                hasAnsweredCurrent && !isSubmitting
+                  ? 'bg-brand-primary hover:bg-brand-primary/90 cursor-pointer text-white'
+                  : 'bg-canvas-inset text-brand-muted border-border-subtle cursor-not-allowed border'
+              }`}
+            >
+              {isSubmitting
+                ? 'Saving Metrics...'
+                : currentIndex === questions.length - 1
+                  ? 'Submit Assessment'
+                  : 'Next Question'}
+              <ArrowRightIcon size={18} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+## `src/main.tsx`
+
+```tsx
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
+import './styles/index.css';
+import App from './components/App';
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+);
+```
+
+## `src/routes.tsx`
+
+```tsx
+import { Navigate } from 'react-router';
+
+import Signup from './features/authentication/pages/Signup';
+import Login from './features/authentication/pages/Login';
+import ForgotPassword from './features/authentication/pages/ForgotPassword';
+import AppLayout from './components/AppLayout';
+import Settings from './features/authentication/pages/Settings';
+import CvUploadPage from './features/cv-processing/pages/CvUploadPage';
+import SkillSelector from './features/skill-assessment/pages/SkillSelector';
+import TestingArena from './features/skill-assessment/pages/TestingArena';
+import RecommendationsPage from './features/career-recommendation/pages/RecommendationsPage';
+import RoadmapView from './features/career-recommendation/pages/RoadmapView';
+import HomePage from './features/dashboard/pages/HomePage';
+import ProtectedRoute from './components/ProtectedRoute';
+import ResetPassword from './features/authentication/pages/ResetPassword';
+
+const routes = [
+  // PUBLIC ROUTES
+  { path: '/signup', element: <Signup /> },
+  { path: '/login', element: <Login /> },
+  { path: '/forgot-password', element: <ForgotPassword /> },
+  { path: '/reset-password', element: <ResetPassword /> },
+
+  // PRIVATE ROUTES
+  {
+    element: (
+      <ProtectedRoute>
+        <AppLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      { path: '/', element: <HomePage /> },
+      { path: '/settings', element: <Settings /> },
+      { path: '/cv-upload', element: <CvUploadPage /> },
+      { path: '/skill-selector', element: <SkillSelector /> },
+      { path: '/assessment', element: <TestingArena /> },
+      { path: '/recommendations', element: <RecommendationsPage /> },
+      { path: '/roadmap', element: <RoadmapView /> },
+    ],
+  },
+
+  // FALLBACK
+  { path: '*', element: <Navigate to='/' replace /> },
+];
+
+export default routes;
+```
+
+## `src/services/apiAuth.ts`
+
+```ts
+import { supabase } from './supabase';
+
+/**
+ * Registers a new student using Supabase Auth
+ */
+export async function signUpUser({ email, password, fullName }) {
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      data: {
+        full_name: fullName,
+      },
+    },
+  });
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+/**
+ * Authenticates an existing student session
+ */
+export async function loginUser({ email, password }) {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+/**
+ * Grabs the active user session and attaches their custom profile table row
+ */
+export async function getCurrentUser() {
+  // 1. Check if there is an active session from Supabase
+  const { data: sessionData } = await supabase.auth.getSession();
+  if (!sessionData.session) return null;
+
+  const { data: authUser, error: authError } = await supabase.auth.getUser();
+  if (authError) throw new Error(authError.message);
+
+  // 2. Fetch the corresponding synchronized profile row from PostgreSQL
+  const { data: profile, error: profileError } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', authUser.user.id)
+    .single();
+
+  if (profileError) {
+    console.error('Profile fetch error:', profileError.message);
+    return null;
+  }
+
+  // Return a combined object containing both credentials and custom profile metadata
+  return {
+    ...authUser.user,
+    profile,
+  };
+}
+
+/**
+ * Signs out the current user session completely
+ */
+export async function logoutUser() {
+  const { error } = await supabase.auth.signOut();
+  if (error) throw new Error(error.message);
+}
+
+/**
+ * Updates metadata fields inside the profiles table
+ */
+export async function updateProfileDetails({
+  userId,
+  fullName,
+  university,
+  avatarUrl,
+}) {
+  const updateData = {
+    full_name: fullName,
+    university,
+    updated_at: new Date().toISOString(),
+  };
+  if (avatarUrl) updateData.avatar_url = avatarUrl;
+
+  const { data, error } = await supabase
+    .from('profiles')
+    .update(updateData)
+    .eq('id', userId)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+/**
+ * Uploads an avatar image asset directly into the Supabase 'avatars' bucket storage
+ */
+export async function uploadAvatarImage(file, userId) {
+  const fileExtension = file.name.split('.').pop();
+  const filePath = `${userId}-${Math.random()}.${fileExtension}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from('avatars')
+    .upload(filePath, file, { cacheControl: '3600', upsert: true });
+
+  if (uploadError) throw new Error(uploadError.message);
+
+  const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
+  return data.publicUrl;
+}
+
+/**
+ * Updates the user's active login password credentials
+ */
+export async function updateUserPassword(newPassword) {
+  const { data, error } = await supabase.auth.updateUser({
+    password: newPassword,
+  });
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+/**
+ * Deletes the student's entire account along with all cascaded profile logs
+ */
+export async function deleteUserAccountComplete() {
+  // Due to Supabase client boundaries, RPC or Edge triggers handle remote deletions smoothly,
+  // but running a direct auth.users delete clears data cascades perfectly for project simulation targets.
+  const { error } = await supabase.rpc('delete_user_self');
+
+  // Fallback: Sign out the user and clean client history variables instantly
+  if (error) {
+    const { error: authDeleteError } = await supabase.auth.signOut();
+    if (authDeleteError) throw new Error(authDeleteError.message);
+  }
+}
+
+/**
+ * Triggers a secure password recovery email via Supabase Auth
+ */
+export async function sendPasswordResetEmail(email) {
+  // Route the inbox link directly to the clean public reset page
+  const redirectToUrl = `${window.location.origin}/reset-password`;
+
+  const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: redirectToUrl,
+  });
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+```
+
+## `src/services/apiRecommendations.ts`
+
+```ts
+import { supabase } from './supabase';
+import { genAI } from './gemini';
+
+const JSON_CLEAN_REGEX = /^```json\s+|\s+```$/g;
+
+/**
+ * 1. Pulls the student's absolute latest assessment row from Supabase
+ */
+export async function getLatestUserAssessment(userId) {
+  const { data, error } = await supabase
+    .from('assessments')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(1);
+
+  if (error) throw new Error(error.message);
+  return data[0] || null;
+}
+
+/**
+ * 2. Feeds that assessment row to Gemini to generate the career options payload
+ */
+export async function generateAiCareerRecommendations(assessmentData) {
+  if (!assessmentData) return [];
+
+  const prompt = `
+    You are an expert Nigerian career counselor and tech talent placement officer.
+    Analyze this student's objective technical evaluation performance metrics to recommend matching careers:
+
+    EVALUATION METRICS:
+    - Target Domain Field Focus: ${assessmentData.tested_discipline}
+    - Verified Input Competencies: ${assessmentData.selected_skills.join(', ')}
+    - Objective Exam Score: ${assessmentData.verified_match_score}%
+
+    Based on this data, identify exactly three real-world career paths suitable for the student. Focus on fields relevant to modern Nigerian industries (e.g., Fintech, localized engineering, or global remote consulting tracks).
+
+    Identify 'Verified Strengths' based only on skills that match their baseline focus, and identify explicit 'Skill Gaps' the student needs to work on to become job-ready.
+
+    Return ONLY a raw JSON array matching this exact schema layout without markdown code blocks:
+    [
+      {
+        "id": 1,
+        "title": "Frontend Engineer",
+        "description": "Build modern interfaces and dynamic web apps...",
+        "match_percentage": 88,
+        "strengths": ["React Fundamentals", "Tailwind CSS Layouts"],
+        "gaps": ["Advanced State Management (Redux)", "Unit Testing Frameworks"]
+      }
+    ]
+  `;
+
+  try {
+    const response = await genAI.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: prompt,
+    });
+
+    const cleanText = response.text.replace(JSON_CLEAN_REGEX, '').trim();
+    return JSON.parse(cleanText);
+  } catch (error) {
+    console.error('Gemini Recommendation Fetch Failure:', error);
+    throw new Error('Failed to parse career recommendation insights.');
+  }
+}
+
+/**
+ * 3. Saves the three AI-generated career paths back into the assessment record row
+ */
+export async function saveRecommendationsToAssessment({
+  assessmentId,
+  recommendations,
+}) {
+  const { data, error } = await supabase
+    .from('assessments')
+    .update({ generated_recommendations: recommendations })
+    .eq('id', assessmentId)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+/**
+ * 4. Feeds the chosen career path and identified gaps to Gemini to generate a structured timeline roadmap
+ */
+export async function generateAiTimelineRoadmap({
+  targetCareer,
+  identifiedGaps,
+}) {
+  const prompt = `
+    You are an elite tech career coach specializing in the Nigerian job market.
+    Generate a highly practical, personalized month-by-month learning roadmap for a student transitioning into this role.
+
+    TARGET CAREER: ${targetCareer}
+    IDENTIFIED SKILL GAPS TO BRIDGE: ${identifiedGaps.join(', ')}
+
+    Create a strict 6-month progressive curriculum to bridge these gaps. 
+    For each month, define a clear overarching technical theme, a primary skill focus, and include 2 accessible learning resource links.
+    Crucially, mix global platforms (like Coursera, freeCodeCamp, or Udemy) with affordable, localized options relevant to Nigeria (such as ALX Africa, Jobberman Skills, or Utiva tracks).
+
+    Return ONLY a raw JSON array matching this exact schema layout without markdown code fence blocks:
+    [
+      {
+        "id": 1,
+        "month": "Month 1",
+        "title": "Foundational Theme Title",
+        "completed": false,
+        "links": [
+          { "text": "ALX Software Engineering Track", "url": "https://www.alxafrica.com" },
+          { "text": "Coursera: Basic Frameworks", "url": "https://www.coursera.org" }
+        ]
+      }
+    ]
+  `;
+
+  try {
+    const response = await genAI.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: prompt,
+    });
+
+    const cleanText = response.text.replace(/^```json\s+|\s+```$/g, '').trim();
+    return JSON.parse(cleanText);
+  } catch (error) {
+    console.error('Gemini Roadmap Generation Failure:', error);
+    throw new Error('Failed to assemble personalized monthly timeline steps.');
+  }
+}
+
+/**
+ * 5. Patches the updated milestone completion checklist array into the database row
+ */
+export async function updateRoadmapProgress({ roadmapId, updatedMilestones }) {
+  const { data, error } = await supabase
+    .from('roadmaps')
+    .update({ timeline_milestones_json: updatedMilestones })
+    .eq('id', roadmapId)
+    .select()
+    .single();
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+
+/**
+ * 6. Completely removes an assessment record row out of Supabase PostgreSQL
+ */
+export async function deleteAssessmentRecord(assessmentId) {
+  const { data, error } = await supabase
+    .from('assessments')
+    .delete()
+    .eq('id', assessmentId);
+
+  if (error) throw new Error(error.message);
+  return data;
+}
+```
+
+## `src/services/gemini.ts`
+
+```ts
+import { GoogleGenAI } from '@google/genai';
+
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+
+if (!apiKey) {
+  console.error(
+    'Missing VITE_GEMINI_API_KEY environment configuration variable.',
+  );
+}
+
+export const genAI = new GoogleGenAI({ apiKey });
+
+const JSON_CLEAN_REGEX = /^```json\s+|\s+```$/g;
+
+/**
+ * Generates an automated, dynamic multi-choice quiz with adaptive volume
+ */
+export async function generateAssessmentQuestions(selectedSkills) {
+  // Calculate dynamic constraints based on the size of the chosen array
+  const skillCount = selectedSkills.length;
+  const questionsPerSkill = skillCount <= 2 ? 5 : 3;
+
+  const prompt = `
+    You are an expert technical interviewer. Generate an assessment exam to test professional proficiency.
+    SKILLS TO TEST: ${selectedSkills.join(', ')}
+
+    CRITICAL INSTRUCTION: Because the student selected exactly ${skillCount} skill(s), you MUST generate exactly ${questionsPerSkill} high-quality Multiple Choice Questions (MCQs) for EACH individual skill listed. 
+    Total questions in your output array must be exactly ${skillCount * questionsPerSkill}.
+
+    Each question must have 4 distinct, plausible options, an explicit zero-indexed correct answer, and a clear educational explanation.
+
+    Return ONLY a raw JSON array matching this exact schema layout without markdown formatting tags or code block fences:
+    [
+      {
+        "id": 1,
+        "skill": "Skill Name",
+        "question": "Clear technical scenario question?",
+        "options": ["Option 0", "Option 1", "Option 2", "Option 3"],
+        "correct_option_index": 0,
+        "explanation": "Brief explanation addressing why the option is correct."
+      }
+    ]
+  `;
+
+  try {
+    const response = await genAI.models.generateContent({
+      model: 'gemini-3.5-flash',
+      contents: prompt,
+    });
+
+    const cleanText = response.text.replace(JSON_CLEAN_REGEX, '').trim();
+    return JSON.parse(cleanText);
+  } catch (error) {
+    console.error('Gemini Generation Error:', error);
+    throw new Error('Failed to compile adaptive assessment parameters.');
+  }
+}
+```
+
+## `src/services/supabase.ts`
+
+```ts
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
+
+const supabaseUrl: string = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey: string = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+// Instantiating a strongly-typed client hook
+export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
+```
+
+## `src/styles/index.css`
+
+```css
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import 'tailwindcss';
+
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+
+  /* Rebranded Luxury Midnight Indigo Palette (Dark Mode First) */
+  --color-canvas-default: #090d16; /* Sleek, deep dark blue canvas background */
+  --color-canvas-panel: #111827; /* Charcoal dark gray for bento cards */
+  --color-canvas-inset: #1f2937; /* Slate grey for deep inputs and sections */
+
+  --color-brand-primary: #7c3aed; /* Vibrant Violet for primary CTA buttons */
+  --color-brand-secondary: #10b981; /* Emerald green for high matching metrics */
+  --color-brand-dark: #f9fafb; /* High-contrast crisp white for header texts */
+  --color-brand-muted: #9ca3af; /* Slate grey for descriptions and sub-labels */
+
+  --color-border-subtle: #374151; /* Slate 700 for layout borders and dividers */
+  --color-border-focus: #a78bfa; /* Focused violet styling borders */
+
+  /* Semantic System Feedback Accent Hooks */
+  --color-feedback-success: #10b981;
+  --color-feedback-warning: #f59e0b;
+  --color-feedback-danger: #ef4444;
+}
+
+@keyframes loading-bar {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
+}
+```
+
+## `tsconfig.json`
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode configuration parameters */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Strict type validation matrices */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src"]
+}
+```
+
+## `vercel.json`
+
+```json
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+```
+
+## `vite.config.js`
+
+```javascript
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+});
+```
+
