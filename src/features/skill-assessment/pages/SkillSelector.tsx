@@ -9,7 +9,7 @@ interface SkillCategory {
 
 const categories: SkillCategory[] = [
   {
-    title: 'Technology',
+    title: 'Technology & Software',
     skills: [
       'React',
       'Python',
@@ -20,10 +20,16 @@ const categories: SkillCategory[] = [
       'Data Analysis',
       'UI/UX Design',
       'Machine Learning',
+      'Web3 & Blockchain',
+      'Smart Contracts',
+      'Mobile Development',
+      'DevOps & CI/CD',
+      'Cloud Architecture',
+      'Data Engineering',
     ],
   },
   {
-    title: 'Engineering',
+    title: 'Engineering & Physical Sciences',
     skills: [
       'Mechanical Design',
       'AutoCAD',
@@ -32,10 +38,14 @@ const categories: SkillCategory[] = [
       'Civil Planning',
       'Thermodynamics',
       'Electrical Design',
+      'Embedded Systems',
+      'Renewable Energy Systems',
+      'Structural Analysis',
+      'Telecommunications',
     ],
   },
   {
-    title: 'Business',
+    title: 'Business, Management & Finance',
     skills: [
       'Financial Modeling',
       'Project Management',
@@ -43,10 +53,15 @@ const categories: SkillCategory[] = [
       'Sales',
       'Agile',
       'Business Analytics',
+      'Product Management',
+      'Financial Accounting',
+      'Supply Chain & Logistics',
+      'Operations Management',
+      'Human Resources Strategy',
     ],
   },
   {
-    title: 'Healthcare',
+    title: 'Healthcare & Life Sciences',
     skills: [
       'Patient Care',
       'Medical Coding',
@@ -54,6 +69,33 @@ const categories: SkillCategory[] = [
       'Clinical Research',
       'Public Health',
       'Pharmacology',
+      'Health Informatics',
+      'Biostatistics',
+      'Nursing Practice',
+      'Medical Imaging Systems',
+    ],
+  },
+  {
+    title: 'Creative Arts & Content Production',
+    skills: [
+      'Graphic Design',
+      'Video Editing',
+      'Copywriting',
+      'Content Strategy',
+      'Motion Graphics',
+      'Photography & Production',
+      'Brand Identity Design',
+    ],
+  },
+  {
+    title: 'Academics, Research & Languages',
+    skills: [
+      'Technical Writing',
+      'Academic Research',
+      'Data Journalism',
+      'Public Speaking',
+      'Translation & Linguistics',
+      'Curriculum Development',
     ],
   },
 ];
