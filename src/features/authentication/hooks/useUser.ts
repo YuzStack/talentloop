@@ -31,7 +31,7 @@ export interface UserProfile {
  */
 export function useUser() {
   const {
-    isLoading,
+    isFetching: isLoading,
     data: user,
     error,
   }: UseQueryResult<FullyPopulatedUser | null, Error> = useQuery({

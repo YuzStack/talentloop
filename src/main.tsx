@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import './styles/index.css';
 import routes from './routes';
+import ThemeProvider from './context/ThemeContext';
 
 // Create a persistent, global Query Client instance
 const queryClient: QueryClient = new QueryClient({
@@ -29,28 +30,30 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
 
-      {/* Global toast notifications config updated for Midnight Indigo alignment */}
-      <Toaster
-        position='top-center'
-        toastOptions={{
-          success: {
-            duration: 3000,
-          },
-          error: {
-            duration: 5000,
-          },
-          style: {
-            background: '#111827', // Dark theme slate panel matching --color-canvas-panel
-            color: '#F9FAFB', // Off-white main text matching --color-brand-dark
-            fontFamily: 'Inter, sans-serif',
-            border: '1px solid #374151', // Subtle divider matching --color-border-subtle
-            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-          },
-        }}
-      />
-    </QueryClientProvider>
+        <Toaster
+          position='top-center'
+          toastOptions={{
+            success: {
+              duration: 3000,
+            },
+            error: {
+              duration: 5000,
+            },
+            /* 💡 Using our Tailwind CSS variables makes the background and text color theme-reactive! */
+            style: {
+              background: 'var(--color-canvas-panel)', // Swaps dynamically between deep blue and pure white
+              color: 'var(--color-brand-dark)', // Swaps dynamically between off-white and charcoal gray
+              border: '1px solid var(--color-border-subtle)', // Swaps seamlessly between light and dark borders
+              fontFamily: 'Inter, sans-serif',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            },
+          }}
+        />
+      </QueryClientProvider>
+    </ThemeProvider>
   </StrictMode>,
 );

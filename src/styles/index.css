@@ -5,23 +5,53 @@
   button {
     cursor: pointer;
   }
+
+  :root {
+    /* ☀️ Tailored Premium Light Mode Variables */
+    --color-canvas-default: #f3f4f6; /* Gray 100 sleek canvas */
+    --color-canvas-panel: #ffffff; /* Pure white card paneling surfaces */
+    --color-canvas-inset: #e5e7eb; /* Gray 200 input bounding blocks */
+
+    --color-brand-primary: #7c3aed; /* Classic persistent violet accents */
+    --color-brand-secondary: #10b981; /* Metric validation emerald green */
+    --color-brand-dark: #111827; /* Rich charcoal text lines for visibility */
+    --color-brand-muted: #4b5563; /* Gray 600 reading summaries */
+
+    --color-border-subtle: #d1d5db; /* Soft slate light dividers */
+    --color-border-focus: #7c3aed;
+  }
+
+  [data-theme='dark'] {
+    /* 🌙 Hyper-Luxury Midnight Indigo Aesthetic (Dark First Default) */
+    --color-canvas-default: #090d16; /* Sleek space-black background canvas */
+    --color-canvas-panel: #111827; /* Deep gray panel boards */
+    --color-canvas-inset: #1f2937; /* Slate gray inputs */
+
+    --color-brand-primary: #7c3aed; /* Persistent signature brand violet */
+    --color-brand-secondary: #10b981; /* Emerald metrics tracker validation */
+    --color-brand-dark: #f9fafb; /* Clean off-white header text structures */
+    --color-brand-muted: #9ca3af; /* Slate gray descriptive layouts */
+
+    --color-border-subtle: #374151; /* Dark divider lines */
+    --color-border-focus: #a78bfa;
+  }
 }
 
 @theme {
   --font-sans: 'Inter', system-ui, sans-serif;
 
-  /* Rebranded Luxury Midnight Indigo Palette (Dark Mode First) */
-  --color-canvas-default: #090d16; /* Sleek, deep dark blue canvas background */
-  --color-canvas-panel: #111827; /* Charcoal dark gray for bento cards */
-  --color-canvas-inset: #1f2937; /* Slate grey for deep inputs and sections */
+  /* Expose configuration variables back to Tailwind's layout compile scanner */
+  --color-canvas-default: var(--color-canvas-default);
+  --color-canvas-panel: var(--color-canvas-panel);
+  --color-canvas-inset: var(--color-canvas-inset);
 
-  --color-brand-primary: #7c3aed; /* Vibrant Violet for primary CTA buttons */
-  --color-brand-secondary: #10b981; /* Emerald green for high matching metrics */
-  --color-brand-dark: #f9fafb; /* High-contrast crisp white for header texts */
-  --color-brand-muted: #9ca3af; /* Slate grey for descriptions and sub-labels */
+  --color-brand-primary: var(--color-brand-primary);
+  --color-brand-secondary: var(--color-brand-secondary);
+  --color-brand-dark: var(--color-brand-dark);
+  --color-brand-muted: var(--color-brand-muted);
 
-  --color-border-subtle: #374151; /* Slate 700 for layout borders and dividers */
-  --color-border-focus: #a78bfa; /* Focused violet styling borders */
+  --color-border-subtle: var(--color-border-subtle);
+  --color-border-focus: var(--color-border-focus);
 
   /* Semantic System Feedback Accent Hooks */
   --color-feedback-success: #10b981;

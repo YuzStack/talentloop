@@ -1,5 +1,6 @@
-import { MenuIcon, LogOutIcon } from 'lucide-react';
+import { MenuIcon, LogOutIcon, Sun, Moon } from 'lucide-react';
 import { useUser, useLogout } from '../features/authentication/hooks/useUser';
+import { useTheme } from '../context/ThemeContext';
 
 interface HeaderProps {
   onMenuClick: () => void;
@@ -8,8 +9,8 @@ interface HeaderProps {
 export default function Header({ onMenuClick }: HeaderProps) {
   const { profile, isLoading: isLoadingProfile } = useUser();
   const { logout, isLoggingOut } = useLogout();
+  const { theme, toggleTheme } = useTheme();
 
-  // Extract initialization letters safely from the profile row
   const initials: string = profile?.full_name
     ? profile.full_name
         .split(' ')
@@ -20,7 +21,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
     : 'TL';
 
   return (
-    <header className='bg-canvas-panel border-border-subtle sticky top-0 z-30 flex h-16 items-center justify-between border-b px-4 font-sans md:px-8'>
+    <header className='bg-canvas-panel border-border-subtle sticky top-0 z-30 flex h-16 items-center justify-between border-b px-4 font-sans transition-colors duration-200 md:px-8'>
       <div className='flex items-center gap-4'>
         {/* Mobile Hamburger Menu Toggle Button */}
         <button
@@ -56,6 +57,15 @@ export default function Header({ onMenuClick }: HeaderProps) {
             initials
           )}
         </div>
+
+        {/* 💡 THEME INTERACTIVE TOGGLE KEY BUTTON ELEMENT */}
+        <button
+          onClick={toggleTheme}
+          className='text-brand-muted hover:text-brand-dark hover:bg-canvas-inset border-border-subtle cursor-pointer rounded-lg border p-2 shadow-sm transition-all'
+          aria-label='Toggle Workspace Color Theme'
+        >
+          {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+        </button>
 
         {/* Global Sign Out Button Layer */}
         <button

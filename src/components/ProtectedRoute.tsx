@@ -1,14 +1,10 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { Navigate } from 'react-router';
 
 import { useUser } from '../features/authentication/hooks/useUser';
 import Spinner from './Spinner';
 
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-}
-
-export default function ProtectedRoute({ children }: ProtectedRouteProps) {
+export default function ProtectedRoute({ children }: { children: ReactNode }) {
   const { isAuthenticated, isLoading } = useUser();
 
   if (isLoading) {
