@@ -13,6 +13,7 @@ import RoadmapView from './features/career-recommendation/pages/RoadmapView';
 import HomePage from './features/dashboard/pages/HomePage';
 import ProtectedRoute from './components/ProtectedRoute';
 import ResetPassword from './features/authentication/pages/ResetPassword';
+import LandingPage from './features/landing-page/pages/LandingPage';
 
 const routes: RouteObject[] = [
   // PUBLIC ROUTES
@@ -20,6 +21,7 @@ const routes: RouteObject[] = [
   { path: '/login', element: <Login /> },
   { path: '/forgot-password', element: <ForgotPassword /> },
   { path: '/reset-password', element: <ResetPassword /> },
+  { path: '/', element: <LandingPage /> },
 
   // PRIVATE ROUTES
   {
@@ -29,7 +31,7 @@ const routes: RouteObject[] = [
       </ProtectedRoute>
     ),
     children: [
-      { path: '/', element: <HomePage /> },
+      { path: '/dashboard', element: <HomePage /> },
       { path: '/settings', element: <Settings /> },
       { path: '/cv-upload', element: <CvUploadPage /> },
       { path: '/skill-selector', element: <SkillSelector /> },
