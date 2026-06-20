@@ -1,37 +1,37 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight, Calendar, MapPin } from 'lucide-react';
 import { useUser } from '../../authentication/hooks/useUser';
+
+const MOCK_MILESTONES = [
+  {
+    month: 'Month 1',
+    title: 'Foundational Layout Mechanics',
+    focus:
+      'Bridging fundamental architecture gaps and learning precise DOM properties.',
+    resources: ['freeCodeCamp Frameworks', 'ALX Software Track'],
+  },
+  {
+    month: 'Month 2',
+    title: 'Asynchronous State Control',
+    focus:
+      'Mastering remote data caching and optimization hooks under production conditions.',
+    resources: ['TanStack Documentation', 'Utiva Tech Cohort'],
+  },
+  {
+    month: 'Month 3',
+    title: 'Type-Safe Software Shipping',
+    focus:
+      'Wrapping enterprise interfaces in defensive TypeScript constraints to eliminate crash bugs.',
+    resources: ['Hitesh Choudhary Playlist', 'Jobberman Skills Portal'],
+  },
+];
 
 export default function RoadmapTrackSection() {
   const { isAuthenticated } = useUser();
   const navigate = useNavigate();
   const [activeMonth, setActiveMonth] = useState(0);
-
-  const mockMilestones = [
-    {
-      month: 'Month 1',
-      title: 'Foundational Layout Mechanics',
-      focus:
-        'Bridging fundamental architecture gaps and learning precise DOM properties.',
-      resources: ['freeCodeCamp Frameworks', 'ALX Software Track'],
-    },
-    {
-      month: 'Month 2',
-      title: 'Asynchronous State Control',
-      focus:
-        'Mastering remote data caching and optimization hooks under production conditions.',
-      resources: ['TanStack Documentation', 'Utiva Tech Cohort'],
-    },
-    {
-      month: 'Month 3',
-      title: 'Type-Safe Software Shipping',
-      focus:
-        'Wrapping enterprise interfaces in defensive TypeScript constraints to eliminate crash bugs.',
-      resources: ['Hitesh Choudhary Playlist', 'Jobberman Skills Portal'],
-    },
-  ];
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -43,6 +43,7 @@ export default function RoadmapTrackSection() {
   return (
     <section className='border-border-subtle bg-canvas-default border-t px-6 py-20 transition-colors duration-200 md:px-12 lg:py-28'>
       <div className='mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center'>
+        {/* Left Side Info Blocks */}
         <div className='space-y-6 text-left lg:col-span-6'>
           <div className='bg-brand-primary/10 border-brand-primary/20 text-brand-primary inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold'>
             <Calendar size={14} />
@@ -84,15 +85,21 @@ export default function RoadmapTrackSection() {
           </div>
         </div>
 
+        {/* Right Side Cards Area */}
         <div className='w-full lg:col-span-6'>
-          <div className='bg-canvas-panel border-border-subtle relative rounded-2xl border p-6 text-left shadow-xl md:p-8'>
+          {/* 💡 layoutRoot lets Framer Motion manage changing heights smoothly across the whole stack */}
+          <motion.div
+            layoutRoot
+            className='bg-canvas-panel border-border-subtle relative rounded-2xl border p-6 text-left shadow-xl md:p-8'
+          >
             <div className='bg-border-subtle absolute top-16 bottom-16 left-11 w-0.5 opacity-40 select-none' />
 
             <div className='relative z-10 space-y-6'>
-              {mockMilestones.map((step, idx) => {
+              {MOCK_MILESTONES.map((step, idx) => {
                 const isCurrent = activeMonth === idx;
                 return (
-                  <div
+                  <motion.div
+                    layout
                     key={idx}
                     onClick={() => setActiveMonth(idx)}
                     className={`flex cursor-pointer items-start gap-4 rounded-xl p-3 transition-all duration-300 ${
@@ -133,34 +140,39 @@ export default function RoadmapTrackSection() {
                         {step.title}
                       </h4>
 
-                      {isCurrent && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          transition={{ duration: 0.3 }}
-                          className='border-border-subtle/40 mt-3 space-y-3 border-t pt-3'
-                        >
-                          <p className='text-brand-muted text-xs leading-relaxed'>
-                            {step.focus}
-                          </p>
-                          <div className='flex flex-wrap gap-2 pt-1 select-none'>
-                            {step.resources.map((res, rIdx) => (
-                              <span
-                                key={rIdx}
-                                className='bg-canvas-default text-brand-dark border-border-subtle text-xxs rounded-md border px-2 py-1 font-medium shadow-2xs'
-                              >
-                                🔗 {res}
-                              </span>
-                            ))}
-                          </div>
-                        </motion.div>
-                      )}
+                      {/* 💡 Wrapped template inside AnimatePresence with layout property tags to stop layout shifts */}
+                      <AnimatePresence initial={false}>
+                        {isCurrent && (
+                          <motion.div
+                            layout
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3, ease: 'easeInOut' }}
+                            className='border-border-subtle/40 mt-3 space-y-3 overflow-hidden border-t pt-3'
+                          >
+                            <p className='text-brand-muted text-xs leading-relaxed'>
+                              {step.focus}
+                            </p>
+                            <div className='flex flex-wrap gap-2 pt-1 select-none'>
+                              {step.resources.map((res, rIdx) => (
+                                <span
+                                  key={rIdx}
+                                  className='bg-canvas-default text-brand-dark border-border-subtle text-xxs rounded-md border px-2 py-1 font-medium shadow-2xs'
+                                >
+                                  🔗 {res}
+                                </span>
+                              ))}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
