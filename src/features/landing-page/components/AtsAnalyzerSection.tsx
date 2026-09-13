@@ -49,8 +49,8 @@ export default function AtsAnalyzerSection() {
         <div className='w-full lg:col-span-6'>
           <div className='bg-canvas-panel border-border-subtle overflow-hidden rounded-2xl border p-6 text-left shadow-xl'>
             <div className='border-border-subtle mb-6 flex items-center justify-between border-b pb-3 select-none'>
-              <span className='text-brand-secondary flex items-center gap-1 text-xs font-bold tracking-wide uppercase'>
-                <Cpu size={14} /> ATS Ingestion Matrix
+              <span className='text-brand-secondary flex items-center gap-2 text-xs font-bold tracking-wide uppercase'>
+                <Cpu size={14} className='shrink-0' /> ATS Ingestion Matrix
               </span>
               <span className='text-brand-muted text-xxs font-mono'>
                 parser_status: active

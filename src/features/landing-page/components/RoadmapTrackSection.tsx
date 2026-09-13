@@ -130,8 +130,9 @@ export default function RoadmapTrackSection() {
                           {step.month}
                         </span>
                         {isCurrent && (
-                          <span className='bg-brand-secondary/10 text-brand-secondary text-xxs flex items-center gap-1 rounded-full px-2 py-0.5 font-bold select-none'>
-                            <MapPin size={10} /> Active Target
+                          <span className='bg-brand-secondary/10 text-brand-secondary flex items-center gap-2 rounded-full px-2 py-0.5 text-xs font-bold select-none'>
+                            <MapPin size={10} className='shrink-0' /> Active
+                            Target
                           </span>
                         )}
                       </div>
